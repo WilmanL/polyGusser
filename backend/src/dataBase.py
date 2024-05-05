@@ -8,6 +8,7 @@ def get_db():
         print("Connection successful")
         db = client["poly_gusser"]
         contextoCollection = db["contexto"]
-        return contextoCollection
+        userGuessCollection = db["userGuessSchema"]
+        return (contextoCollection, userGuessCollection)
     except pymongo.errors.ServerSelectionTimeoutError as err:
         print("Failed to connect to server:", err)
