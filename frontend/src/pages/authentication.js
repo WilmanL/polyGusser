@@ -6,11 +6,11 @@ import RightWallComponent from '../components/RightWallComponent';
 import NewPostComponent from '../components/NewPostComponent';
 import FillBar from '../components/Fillbar';
 
-const INVALID_TOKEN = "INVALID_TOKEN";
-const [token, setToken] = useState(INVALID_TOKEN);
-const [message, setMessage] = useState("");
+// const INVALID_TOKEN = "INVALID_TOKEN";
+// const [token, setToken] = useState(INVALID_TOKEN);
+// const [message, setMessage] = useState("");
 
-function loginUser(creds) {
+  export function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}/login`, {
       method: "POST",
       headers: {
@@ -37,7 +37,7 @@ function loginUser(creds) {
     return promise;
   }
 
-  function fetchUsers() {
+  export function fetchUsers() {
     const promise = fetch(`${API_PREFIX}/users`, {
       headers: addAuthHeader()
     });
@@ -45,7 +45,7 @@ function loginUser(creds) {
     return promise;
   }
 
-  const promise = fetch(`${API_PREFIX}/users`, {
+  export const promise = fetch(`${API_PREFIX}/users`, {
     method: "POST",
     headers: addAuthHeader({
       "Content-Type": "application/json"
@@ -53,7 +53,7 @@ function loginUser(creds) {
     body: JSON.stringify(person)
   });
 
-  function addAuthHeader(otherHeaders = {}) {
+  export function addAuthHeader(otherHeaders = {}) {
     if (token === INVALID_TOKEN) {
       return otherHeaders;
     } else {
@@ -64,7 +64,7 @@ function loginUser(creds) {
     }
   }
 
-  function signupUser(creds) {
+  export function signupUser(creds) {
     const promise = fetch(`${API_PREFIX}/signup`, {
       method: "POST",
       headers: {

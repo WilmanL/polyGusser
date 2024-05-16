@@ -5,9 +5,9 @@ import LeftWallComponent from '../components/LeftWallComponent';
 import RightWallComponent from '../components/RightWallComponent';
 import NewPostComponent from '../components/NewPostComponent';
 import FillBar from '../components/Fillbar';
-import "./authentication"
+import {loginUser, fetchUser, addAuthHeader, signupUser} from "./authentication"
 
-function Login(props) {
+export function Login(props) {
   const [creds, setCreds] = useState({
     username: "",
     pwd: ""
