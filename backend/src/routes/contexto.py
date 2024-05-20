@@ -7,7 +7,7 @@ from bson.json_util import dumps
 from dataBase import get_db
 
 # @brief: gets the functional access to contexto collection
-contextoCollection, userGuessCollection = get_db()
+contextoCollection, userGuessCollection, loginCollection = get_db()
 
 # @brief: Setup the word for the day in the database if not present
 def wordSetup():
@@ -35,7 +35,7 @@ def findSimilarity(guess_word, wordOfTheDay):
 
 # @brief: route to contexto endpoint
 contexto = Blueprint('contexto', __name__)
-@contexto.route('/polygusser/contexto')
+@contexto.route('/polyguesser/contexto')
 def get_contexto():
     guess_word = ''
     guessed = False
