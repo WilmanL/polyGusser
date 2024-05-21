@@ -9,18 +9,23 @@ from dataBase import get_db
 loginCollection = get_db()
 
 signup = Blueprint('signup', __name__)
+
 @signup.route('/polyguesser/signup', methods=['POST'])
 def userSignup():
     data = request.get_json()
     username = data.get('username', '').strip()
     password = data.get('password', '').strip()
     passwordConfirmation = data.get('password')
+
     if passwordConfirmation != password:
         return jsonify({"error": "Passwords do not match"}), 400
-    if username is None or password is None:
+    
+    if not username or not password:
         return jsonify({"error": "Username and password are required"}), 400
+    
     if loginCollection.find_one({'username': username}):
         return jsonify({"error": "Username already exists"}), 409
+    
     else:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
@@ -31,7 +36,7 @@ def userSignup():
         }
         result = loginCollection.insert_one(user)
         user_id = str(result.inserted_id)
-        return jsonify({"message": "User created successfully"}), 201
+        return jsonify({"message": "User created successfully", "user_id": user_id}), 201
     
     
         
