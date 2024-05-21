@@ -10,85 +10,75 @@ import FillBar from '../components/Fillbar';
 // const [token, setToken] = useState(INVALID_TOKEN);
 // const [message, setMessage] = useState("");
 
-  export function loginUser(creds) {
-    const promise = fetch(`${API_PREFIX}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(creds)
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          response
-            .json()
-            .then((payload) => setToken(payload.token));
-          setMessage(`Login successful; auth token saved`);
-        } else {
-          setMessage(
-            `Login Error ${response.status}: ${response.data}`
-          );
-        }
-      })
-      .catch((error) => {
-        setMessage(`Login Error: ${error}`);
-      });
-  
-    return promise;
-  }
+const API_PREFIX = "http://localhost:5000/polyguesser";
+let token = null; // To store the token
+let setMessage = console.log; // Default message handler, replace with your message handling logic
 
-  export function fetchUsers() {
-    const promise = fetch(`${API_PREFIX}/users`, {
-      headers: addAuthHeader()
-    });
-  
-    return promise;
-  }
-
-  export const promise = fetch(`${API_PREFIX}/users`, {
+export function loginUser(creds) {
+  return fetch(`${API_PREFIX}/login`, {
     method: "POST",
-    headers: addAuthHeader({
+    headers: {
       "Content-Type": "application/json"
-    }),
-    body: JSON.stringify(person)
-  });
-
-  export function addAuthHeader(otherHeaders = {}) {
-    if (token === INVALID_TOKEN) {
-      return otherHeaders;
-    } else {
-      return {
-        ...otherHeaders,
-        Authorization: `Bearer ${token}`
-      };
-    }
-  }
-
-  export function signupUser(creds) {
-    const promise = fetch(`${API_PREFIX}/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(creds)
+    },
+    body: JSON.stringify(creds)
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json().then((payload) => {
+          token = payload.token;
+          setMessage(`Login successful; auth token saved`);
+        });
+      } else {
+        response.json().then((data) => {
+          setMessage(`Login Error ${response.status}: ${data}`);
+        });
+      }
     })
-      .then((response) => {
-        if (response.status === 201) {
-          response
-            .json()
-            .then((payload) => setToken(payload.token));
+    .catch((error) => {
+      setMessage(`Login Error: ${error}`);
+    });
+}
+
+export function fetchUsers() {
+  return fetch(`${API_PREFIX}/users`, {
+    headers: addAuthHeader()
+  });
+}
+
+export function addAuthHeader(otherHeaders = {}) {
+  if (token === null) {
+    return otherHeaders;
+  } else {
+    return {
+      ...otherHeaders,
+      Authorization: `Bearer ${token}`
+    };
+  }
+}
+
+export function signupUser(creds) {
+  return fetch(`${API_PREFIX}/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(creds)
+  })
+    .then((response) => {
+      if (response.status === 201) {
+        return response.json().then((payload) => {
+          token = payload.token;
           setMessage(
             `Signup successful for user: ${creds.username}; auth token saved`
           );
-        } else {
-          setMessage(
-            `Signup Error ${response.status}: ${response.data}`
-          );
-        }
-      })
-      .catch((error) => {
-        setMessage(`Signup Error: ${error}`);
-      });
-  
-    return promise;
-  }
+        });
+      } else {
+        setMessage(
+          `Signup Error ${response.status}: ${response.data}`
+        );
+      }
+    })
+    .catch((error) => {
+      setMessage(`Signup Error: ${error}`);
+    });
+}

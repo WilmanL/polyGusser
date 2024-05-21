@@ -1,17 +1,26 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { scrollbarStyles } from '../customStyles/scrollBarStyles';
-import LeftWallComponent from '../components/LeftWallComponent';
-import RightWallComponent from '../components/RightWallComponent';
-import NewPostComponent from '../components/NewPostComponent';
-import FillBar from '../components/Fillbar';
-import {loginUser, fetchUser, addAuthHeader, signupUser} from "./authentication"
+import React, { useState } from 'react';
+import { loginUser } from "./authentication";
 
 export function Login(props) {
   const [creds, setCreds] = useState({
     username: "",
-    pwd: ""
+    password: ""
   });
+  const [message, setMessage] = useState("");
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setCreds({ ...creds, [name]: value });
+  }
+
+  function submitForm() {
+    props.handleSubmit(creds).then(() => {
+      setMessage("Login successful!");
+      setCreds({ username: "", password: "" });
+    }).catch((error) => {
+      setMessage(`Login failed: ${error.message}`);
+    });
+  }
 
   return (
     <form>
@@ -28,7 +37,7 @@ export function Login(props) {
         type="password"
         name="password"
         id="password"
-        value={creds.pwd}
+        value={creds.password}
         onChange={handleChange}
       />
       <input
@@ -36,25 +45,9 @@ export function Login(props) {
         value={props.buttonLabel || "Log In"}
         onClick={submitForm}
       />
+      {message && <p>{message}</p>}
     </form>
   );
-
-  function handleChange(event) {
-    const { name, value } = event.target;
-    switch (name) {
-      case "username":
-        setCreds({ ...creds, username: value });
-        break;
-      case "password":
-        setCreds({ ...creds, pwd: value });
-        break;
-    }
-  }
-
-  function submitForm() {
-    props.handleSubmit(creds);
-    setCreds({ username: "", pwd: "" });
-  }
 }
-export default Login;
 
+export default Login;

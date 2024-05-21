@@ -1,12 +1,15 @@
 from flask import Flask
-from routes.contexto import contexto
 from flask_cors import CORS
+from routes.contexto import contextos
 from routes.login import login
+from routes.signup import signup
 
 app = Flask(__name__)
 CORS(app)
-app.register_blueprint(contexto)
-app.register_blueprint(login)
+
+app.register_blueprint(contexto, url_prefix='/polyguesser')
+app.register_blueprint(login, url_prefix='/polyguesser')
+app.register_blueprint(signup, url_prefix='/polyguesser')
 
 @app.route('/')
 def home():
