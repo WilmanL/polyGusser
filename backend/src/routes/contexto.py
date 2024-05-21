@@ -13,7 +13,6 @@ contextoCollection, userGuessCollection = get_db()
 def wordSetup():
     currDate = datetime.now().date()
     result = contextoCollection.find_one({"date": str(currDate)})
-    print(result)
     if result is None:
         word2vec_file = './models/glove.6B.50d.word2vec.txt'
         model = KeyedVectors.load_word2vec_format(word2vec_file, binary=False)
@@ -25,6 +24,11 @@ def wordSetup():
 def findSimilarity(guess_word, wordOfTheDay):
     word2vec_file = './models/glove.6B.50d.word2vec.txt'
     model = KeyedVectors.load_word2vec_format(word2vec_file, binary=False)
+
+    # if user enters some gibberish word that is not in the model
+    if guess_word not in model:
+        return 0.0
+
     similarity = model.similarity(wordOfTheDay, guess_word)
     return similarity
 
@@ -33,8 +37,8 @@ def findSimilarity(guess_word, wordOfTheDay):
 contexto = Blueprint('contexto', __name__)
 @contexto.route('/polygusser/contexto')
 def get_contexto():
-    print('contexto called')
     guess_word = ''
+    guessed = False
     user_id = ''
     guess_word = request.args.get('guess_word', default = '', type = str)
     user_id = request.args.get('user_id', default = '', type = str)
@@ -50,8 +54,12 @@ def get_contexto():
             max_guess_number = max_guess_document["guess_number"] + 1
         else:
             max_guess_number = 1
+
+        # if user successfully guesses the word
+        if similarity >= 1.0:
+            guessed = True
         
-        userGuessCollection.insert_one({"user_id": user_id, "guess_number": max_guess_number, "guess_word": guess_word, "similarity": float(similarity), "date": str(currDate)})
+        userGuessCollection.insert_one({"user_id": user_id, "guess_number": max_guess_number, "guess_word": guess_word, "similarity": float(similarity), "date": str(currDate), "guessed": guessed})
 
         document_today = userGuessCollection.find({"date": str(currDate), "user_id": user_id})
         document_today = [json.loads(dumps(doc)) for doc in document_today]
