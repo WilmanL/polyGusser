@@ -21,8 +21,8 @@ function App() {
           <Route path="/polygusser/login" element={<Login handleSubmit={loginUser}/>}/>
           <Route path="/polygusser/home" element={<Wall/>} />
           <Route path="/polygusser/contextoGame" element={<ContextoGame/>} />
-          {/* <Route path="/*" element={<Wall/>} /> */}
-          <Route path="/*" element={<Login handleSubmit={loginUser}/>}/>
+          <Route path="/*" element={<Wall/>} />
+          {/* <Route path="/*" element={<Login handleSubmit={loginUser}/>}/> */}
         </Routes>
         <Routes>
           <Route path="/polygusser/messages" element={<Messages/>} />

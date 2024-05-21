@@ -10,7 +10,7 @@
 
 Backend Instructions:
 -cd into backend folder
--create/activate python3.10 virtual env (this can be made using python3.10 -m venv "name of virtual env") this can be activated with ./"name of virtual env"/Script/activate
+-create/activate python3.10 virtual env (this can be made using python3.10 -m venv "name of virtual env") this can be activated with ./"name of virtual env"/Scripts/activate
 -activate mongod
 -if you havent already, run all the schema files in schema folders, run database.py and run index.py
 Frontend Instructions:
