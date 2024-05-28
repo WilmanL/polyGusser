@@ -5,6 +5,7 @@ import random
 import json
 from bson.json_util import dumps
 from dataBase import get_db
+from nltk.corpus import words
 
 # @brief: gets the functional access to contexto collection
 contextoCollection, userGuessCollection = get_db()
@@ -14,10 +15,8 @@ def wordSetup():
     currDate = datetime.now().date()
     result = contextoCollection.find_one({"date": str(currDate)})
     if result is None:
-        word2vec_file = './models/glove.6B.50d.word2vec.txt'
-        model = KeyedVectors.load_word2vec_format(word2vec_file, binary=False)
-        words =  model.index_to_key
-        random_word = random.choice(words)
+        word_list = words.words()
+        random_word = random.choice(word_list)
         word_length = len(random_word)
         contextoCollection.insert_one({"date": str(currDate), "game_word": random_word, "game_word_length": word_length})
 
