@@ -3,3 +3,4 @@ gensim
 flask
 pymongo
 flask_cors
+nltk

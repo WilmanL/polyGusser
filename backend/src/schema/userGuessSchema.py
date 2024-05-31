@@ -7,7 +7,7 @@ db = client["poly_gusser"]
 schema = {
     "$jsonSchema": {
         "bsonType": "object",
-        "required": ["user_id","guess_number", "similarity", "date", "guess_word", "guessed"],
+        "required": ["user_id","guess_number", "date", "guess_word", "guessed"],
         "properties": {
             "user_id": {
                 "bsonType": "string",
@@ -16,10 +16,6 @@ schema = {
             "guess_number": {
                 "bsonType": "int",
                 "description": "must be an integer and is required"
-            },
-            "similarity": {
-                "bsonType": "double",
-                "description": "must be a double and is required"
             },
             "date": {
                 "bsonType": "string",
