@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from routes.contexto import contextos
+from routes.contexto import contexto
 from routes.login import login
 from routes.signup import signup
 
