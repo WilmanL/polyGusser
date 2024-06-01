@@ -10,7 +10,7 @@ loginCollection = get_db()
 
 signup = Blueprint('signup', __name__)
 
-@signup.route('/polyguesser/signup', methods=['POST'])
+@signup.route('/signup', methods=['POST'])
 def userSignup():
     data = request.get_json()
     username = data.get('username', '').strip()
@@ -25,18 +25,11 @@ def userSignup():
     
     if loginCollection.find_one({'username': username}):
         return jsonify({"error": "Username already exists"}), 409
-    
-    else:
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-        # Create the user document
-        user = {
-            "username": username,
-            "password": hashed_password.decode('utf-8'),  # Store the hashed password as a string
-        }
-        result = loginCollection.insert_one(user)
-        user_id = str(result.inserted_id)
-        return jsonify({"message": "User created successfully", "user_id": user_id}), 201
-    
-    
-        
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    user = {"username": username, "password": hashed_password.decode('utf-8')}
+    result = loginCollection.insert_one(user)
+    user_id = str(result.inserted_id)
+
+    access_token = create_access_token(identity={'username': username})
+    return jsonify({"message": "User created successfully", "user_id": user_id, "access_token": access_token}), 201

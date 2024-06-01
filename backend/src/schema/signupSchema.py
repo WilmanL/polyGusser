@@ -7,24 +7,25 @@ db = client["poly_gusser"]
 schema = {
     "$jsonSchema": {
         "bsonType": "object",
-        "required": ["username","first_name", "last_name", "email", "password"],
+        "required": ["username", "password"],
+        # "required": ["username","first_name", "last_name", "email", "password"],
         "properties": {
             "username": {
                 "bsonType": "string",
                 "description": "must be a string and is required"
             },
-            "first_name": {
-                "bsonType": "string",
-                "description": "must be a string and is required"
-            },
-            "last_name": {
-                "bsonType": "string",
-                "description": "must be a string and is required"
-            },
-            "email": {
-                "bsonType": "string",
-                "description": "must be a string and is required"
-            },
+            # "first_name": {
+            #     "bsonType": "string",
+            #     "description": "must be a string and is required"
+            # },
+            # "last_name": {
+            #     "bsonType": "string",
+            #     "description": "must be a string and is required"
+            # },
+            # "email": {
+            #     "bsonType": "string",
+            #     "description": "must be a string and is required"
+            # },
             "password": {
                 "bsonType": "string",
                 "description": "must be a string and is required"

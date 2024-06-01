@@ -8,7 +8,7 @@ from dataBase import get_db
 from nltk.corpus import words
 
 # @brief: gets the functional access to contexto collection
-contextoCollection, userGuessCollection, loginCollection = get_db()
+loginDataCollection, contextoCollection, userGuessCollection = get_db()
 
 # @brief: Setup the word for the day in the database if not present
 def wordSetup():

@@ -10,26 +10,31 @@ export default function ContextoGame() {
     const [document_today, setDocumentToday] = useState([]);
     const [guess_word, setGuessWord] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [user_id, setUserId] = useState(null); // Initialize user ID state
 
-    //temp hardcoded vars for development - need to change these later
-    const user_id = 'saumitra26';
-
-    // component mounted
     useEffect(() => {
         setIsLoading(true);
-        fetch(`http://localhost:5000/polygusser/contexto?user_id=${user_id}`)
-            .then(response => response.json()) // parse the JSON from the body of the response
-            .then(data => {
-                console.log(data);
-                setDocumentToday(data);
-                setIsLoading(false);
-            })
-            .catch(error => console.error('Error:', error));
-    }, []);
+        // Fetch user ID from authentication token (e.g., localStorage, cookies, etc.)
+        const storedUserId = localStorage.getItem('user_id'); // Example: Retrieve user ID from localStorage
+        if (storedUserId) {
+            setUserId(storedUserId); // Set user ID state
+            // Fetch data using user ID
+            fetch(`http://localhost:5000/polygusser/contexto?user_id=${storedUserId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    setDocumentToday(data);
+                    setIsLoading(false);
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            setIsLoading(false); // If user ID is not found, stop loading
+        }
+    }, []); // Fetch data when component mounts
 
     //fetch the data when the guess_word changes
     useEffect(() => {
-        if (guess_word) {
+        if (guess_word && user_id) { // Check if user ID is available before fetching data
             setIsLoading(true);
             fetch(`http://localhost:5000/polygusser/contexto?guess_word=${guess_word}&user_id=${user_id}`)
                 .then(response => response.json())
@@ -39,8 +44,7 @@ export default function ContextoGame() {
                 })
                 .catch(error => console.error('Error:', error));
         }
-    }, [guess_word]);
-
+    }, [guess_word, user_id]); // Fetch data when guess_word or user_id changes
   return (
     <div className="container">
         {isLoading ? (
