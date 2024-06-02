@@ -14,7 +14,7 @@ export default function ContextoGame() {
     const [isLoading, setIsLoading] = useState(false);
 
     //temp hardcoded vars for development - need to change these later
-    const user_id = 'saumitra26';
+    const user_id = 'dhruv26';
 
     // component mounted
     useEffect(() => {
@@ -82,7 +82,7 @@ export default function ContextoGame() {
                         </div>
                     </div>
                 </div>
-            <RightWallComponent/>
+            <RightWallComponent gameDoc = {gameDoc}/>
         </div>
     </div>
   );

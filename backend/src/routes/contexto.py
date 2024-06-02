@@ -85,5 +85,20 @@ def get_contexto_result():
     currDate = datetime.now().date()
     result = userGuessCollection.find_one({"user_id": user_id, "date": str(currDate)}, sort=[("guess_number", -1)])
     wordInfo = contextoCollection.find_one({"date": str(currDate)})
+
+    # temp set the userName
+    user_name = "Dhruv"
+    
+    # check if the user is successfully guessed the word
+    if result is not None and result["guessed"]:
+        leaderboardCollection.insert_one({"user_id": result["user_id"], "user_name": user_name, "date": str(currDate), "wordOfDay": wordInfo["game_word"], "number_of_guesses": result["guess_number"]})
+    
     return dumps({"result": result, "wordInfo": wordInfo})
+
+# @brief: route to get leaderboard
+@contexto.route('/polygusser/leaderboard')
+def get_leaderboard():
+    currDate = datetime.now().date()
+    result = leaderboardCollection.find({"date": str(currDate)}, sort=[("number_of_guesses", 1)])
+    return dumps(result)
 
