@@ -1,8 +1,5 @@
-
 import './Wordle.css';
 import { useState, useEffect} from "react";
-
-import React from 'react';
 
 // hard set querty keyboard for wordle
 const keyboard = [

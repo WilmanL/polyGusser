@@ -4,10 +4,12 @@ import { scrollbarStyles } from '../customStyles/scrollBarStyles';
 import LeftWallComponent from '../components/LeftWallComponent';
 import RightWallComponent from '../components/RightWallComponent';
 import Wordle from '../components/Wordle';
+import WordleResult from '../components/WordleResult';
 
 export default function ContextoGame() {
     // component mounted state information
     const [document_today, setDocumentToday] = useState([]);
+    const [gameDoc, setGameDoc] = useState({});
     const [guess_word, setGuessWord] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -21,7 +23,7 @@ export default function ContextoGame() {
             .then(response => response.json()) // parse the JSON from the body of the response
             .then(data => {
                 console.log(data);
-                setDocumentToday(data);
+                setGameDoc(data);
                 setIsLoading(false);
             })
             .catch(error => console.error('Error:', error));
@@ -34,12 +36,20 @@ export default function ContextoGame() {
             fetch(`http://localhost:5000/polygusser/contexto?guess_word=${guess_word}&user_id=${user_id}`)
                 .then(response => response.json())
                 .then(data => {
-                    setDocumentToday(data);
+                    setGameDoc(data);
+                    console.log(data);
                     setIsLoading(false);
                 })
                 .catch(error => console.error('Error:', error));
         }
     }, [guess_word]);
+
+    //update the document today
+    useEffect(() => {
+        if (gameDoc.similarity) {
+            setDocumentToday(gameDoc.similarity);
+        }
+    }, [gameDoc]);
 
   return (
     <div className="container">
@@ -62,7 +72,12 @@ export default function ContextoGame() {
                 <div className="col-12 col-lg-6">
                     <div className="middle-column">
                         <div className="card scrollBar" style={{ overflow: 'auto', overflowX: 'hidden', maxHeight: '100vh' }}>
-                            <Wordle document_today={document_today} setGuessWord={setGuessWord}/>
+                            {/* <WordleResult /> */}
+                        {
+                            (gameDoc.guessed === true || gameDoc.guessNumber >= 6) 
+                            ? <WordleResult user_id = {user_id}/>
+                            : <Wordle document_today={document_today} setGuessWord={setGuessWord}/>
+                        }
                             <style>{scrollbarStyles}</style>
                         </div>
                     </div>

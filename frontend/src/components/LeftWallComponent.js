@@ -13,7 +13,7 @@ export default function LeftWallComponent() {
                     <div className="card-body text-center">
                     <img src={testImage} alt="img" width="120px" height="120px" className="rounded-circle mt-n5" />
                     <h5 className="card-title">Saumitra Tiwari</h5>
-                    <p className="card-text text-justify mb-2">I wish I was a little bit taller, wish I was a baller, wish I had a girl… also.</p>
+                    <p className="card-text text-justify mb-2">I wish I was a little bit tallers.</p>
                     <ul className="list-unstyled nav justify-content-center">
                         <a href="#" className="text-dark text-decoration-none">
                         <li className="nav-item">Friends <br /> <strong>12M</strong></li>

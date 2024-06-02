@@ -8,7 +8,7 @@ from dataBase import get_db
 from nltk.corpus import words
 
 # @brief: gets the functional access to contexto collection
-contextoCollection, userGuessCollection = get_db()
+contextoCollection, userGuessCollection, leaderboardCollection = get_db()
 
 # @brief: Setup the word for the day in the database if not present
 def wordSetup():
@@ -35,6 +35,14 @@ def findSimilarity(guess_word, wordOfTheDay):
             wordList.append(CharInCommon)
     return wordList
 
+# @brief: check if the word is successfully guessed or not
+def guess_update(wordList):
+    guessed = True
+    for i in range(len(wordList)):
+        if wordList[i]['color'] != 'green':
+            guessed = False
+            break
+    return guessed
 
 # @brief: route to contexto endpoint
 contexto = Blueprint('contexto', __name__)
@@ -59,10 +67,23 @@ def get_contexto():
         else:
             max_guess_number = 1
         
+        guessed = guess_update(similarity)
+        
         userGuessCollection.insert_one({"user_id": user_id, "guess_number": max_guess_number, "guess_word": guess_word, "date": str(currDate), "guessed": guessed})
-        return jsonify(similarity)
+        return jsonify({"similarity": similarity, "guessed": guessed, "guessNumber": max_guess_number})
     
     # default return empty
     if not similarity:
         return jsonify([])
+
+
+# @brief: route to get result of the day
+@contexto.route('/polygusser/contexto_result')
+def get_contexto_result():
+    user_id = ''
+    user_id = request.args.get('user_id', default = '', type = str)
+    currDate = datetime.now().date()
+    result = userGuessCollection.find_one({"user_id": user_id, "date": str(currDate)}, sort=[("guess_number", -1)])
+    wordInfo = contextoCollection.find_one({"date": str(currDate)})
+    return dumps({"result": result, "wordInfo": wordInfo})
 

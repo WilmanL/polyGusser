@@ -54,6 +54,27 @@
   transform: rotate(9.00deg);
 }
 
+.title3 {
+  color: #0d68a5;
+  letter-spacing: 3px;
+  min-height: 30px;
+  width: 150px;
+  font-size: 30px;
+  font-weight: 400;
+  margin-top: 10px;
+  font-family: 'Yantramanav', sans-serif;
+}
+
+.title4 {
+  color: #375e4a;
+  letter-spacing: 2px;
+  min-height: 25px;
+  font-size: 25px;
+  font-weight: 300;
+  margin-top: 25px;
+  font-family: 'Yantramanav', sans-serif;
+}
+
 .bar{
   display: flex;
   flex-direction: row;
@@ -198,6 +219,15 @@ margin: 0.5%;
   font-family: 'Yantramanav', sans-serif;
   text-align: center;
   cursor: pointer;
+}
+
+.result-card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  padding: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .Greenkey{
