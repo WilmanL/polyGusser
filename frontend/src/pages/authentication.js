@@ -1,3 +1,5 @@
+//  frontend/src/pages/authentication.js
+
 import React, { useState } from 'react';
 
 const API_PREFIX = "http://localhost:5000/polyguesser";

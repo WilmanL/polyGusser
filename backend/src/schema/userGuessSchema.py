@@ -1,3 +1,5 @@
+# backend/src/schema/userGuessSchema.py
+
 import pymongo
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")

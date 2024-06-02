@@ -1,3 +1,5 @@
+//  frontend/src/pages/Wall.js
+
 import React from 'react';
 import LeftWallComponent from '../components/LeftWallComponent';
 import MiddleWallComponent from '../components/MiddleWallComponent';

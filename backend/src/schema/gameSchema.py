@@ -1,3 +1,5 @@
+# backend/src/schema/gameSchema.py
+
 import pymongo
 # from pymongo import MongoClient
 

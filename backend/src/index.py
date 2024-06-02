@@ -1,3 +1,5 @@
+# backend/src/index.py
+
 from flask import Flask, jsonify
 from flask_cors import CORS
 from routes.contexto import contexto
@@ -6,6 +8,8 @@ from routes.signup import signup
 from dataBase import get_db  # Import the get_db function
 from functools import wraps
 from flask import request
+from routes.login import token_required
+
 
 app = Flask(__name__)
 CORS(app)

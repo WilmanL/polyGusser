@@ -1,3 +1,5 @@
+# backend/src/routes/contexto.py
+
 from flask import Blueprint, request, jsonify
 from datetime import datetime
 from gensim.models import KeyedVectors
@@ -6,6 +8,7 @@ import json
 from bson.json_util import dumps
 from dataBase import get_db
 from nltk.corpus import words
+import jwt
 
 # @brief: gets the functional access to contexto collection
 loginDataCollection, contextoCollection, userGuessCollection = get_db()
@@ -40,6 +43,18 @@ def findSimilarity(guess_word, wordOfTheDay):
 contexto = Blueprint('contexto', __name__)
 @contexto.route('/polyguesser/contexto')
 def get_contexto():
+    # Verify token
+    token = request.headers.get('Authorization')
+    if not token:
+        return jsonify({'error': 'Token is missing!'}), 403
+
+    try:
+        jwt.decode(token.split()[1], SECRET_KEY, algorithms=["HS256"])
+    except jwt.ExpiredSignatureError:
+        return jsonify({'error': 'Token expired!'}), 403
+    except jwt.InvalidTokenError:
+        return jsonify({'error': 'Invalid token!'}), 403
+
     guess_word = ''
     guessed = False
     user_id = ''

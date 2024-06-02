@@ -1,3 +1,5 @@
+# backend/src/schema/signupSchema.py
+
 import pymongo
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -14,18 +16,6 @@ schema = {
                 "bsonType": "string",
                 "description": "must be a string and is required"
             },
-            # "first_name": {
-            #     "bsonType": "string",
-            #     "description": "must be a string and is required"
-            # },
-            # "last_name": {
-            #     "bsonType": "string",
-            #     "description": "must be a string and is required"
-            # },
-            # "email": {
-            #     "bsonType": "string",
-            #     "description": "must be a string and is required"
-            # },
             "password": {
                 "bsonType": "string",
                 "description": "must be a string and is required"
