@@ -2,45 +2,13 @@
 
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from gensim.models import KeyedVectors
-import random
-import json
-from bson.json_util import dumps
 from dataBase import get_db
-from nltk.corpus import words
-import jwt
 
+contexto = Blueprint('contexto', __name__)
 loginDataCollection, contextoCollection, userGuessCollection = get_db()
 SECRET_KEY = "your_secret_key"  # Ensure this matches your actual secret key
 
-# @brief: Setup the word for the day in the database if not present
-def wordSetup():
-    currDate = datetime.now().date()
-    result = contextoCollection.find_one({"date": str(currDate)})
-    if result is None:
-        word_list = [word for word in words.words() if len(word) == 5]
-        random_word = random.choice(word_list).lower()
-        word_length = len(random_word)
-        contextoCollection.insert_one({"date": str(currDate), "game_word": random_word, "game_word_length": word_length})
-
-def findSimilarity(guess_word, wordOfTheDay):
-    wordList = []
-    guess_word = guess_word.lower()
-    for i in range(len(guess_word)):
-        if guess_word[i] == wordOfTheDay[i]:
-            CharInCommon = {'index': i, 'guessCharacter': guess_word[i], 'color': 'green'}
-            wordList.append(CharInCommon)
-        elif guess_word[i] in wordOfTheDay:
-            CharInCommon = {'index': i, 'guessCharacter': guess_word[i], 'color': 'yellow'}
-            wordList.append(CharInCommon)
-        else:
-            CharInCommon = {'index': i, 'guessCharacter': guess_word[i], 'color': 'grey'}
-            wordList.append(CharInCommon)
-    return wordList
-
-contexto = Blueprint('contexto', __name__)
-
-@contexto.route('/polyguesser/contexto')
+@contexto.route('/polyguesser/contexto', methods=['GET'])
 def get_contexto():
     token = request.headers.get('Authorization')
     if not token:

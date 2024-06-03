@@ -1,5 +1,4 @@
 // frontend/src/pages/login.js
-
 import React, { useState } from 'react';
 
 export default function Login() {
@@ -27,7 +26,7 @@ export default function Login() {
                 localStorage.setItem('token', data.token); // Save token
                 window.location.href = '/polygusser/contextoGame'; // Redirect to game
             } else {
-                setError(data.error || 'Login failed');
+                setError(data.message || 'Login failed');
             }
         } catch (error) {
             setError('Login failed');

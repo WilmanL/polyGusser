@@ -1,7 +1,7 @@
 # backend/src/routes/login.py
 
 from flask import Blueprint, request, jsonify
-from datetime import datetime
+from datetime import datetime, timedelta
 import bcrypt
 from dataBase import get_db
 import jwt
@@ -19,8 +19,8 @@ def login_user():
 
     user = loginCollection.find_one({"username": username})
 
-    if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):  # Fixing the syntax error here
-        token = jwt.encode({'username': username, 'exp': datetime.utcnow() + datetime.timedelta(hours=1)}, SECRET_KEY)
+    if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
+        token = jwt.encode({'username': username, 'exp': datetime.utcnow() + timedelta(hours=1)}, SECRET_KEY, algorithm='HS256')
         return jsonify({'user_id': str(user['_id']), 'token': token})  # Ensure user_id is returned as a string
     
     return jsonify({'message': 'Invalid username or password'}), 401

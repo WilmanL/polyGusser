@@ -1,3 +1,4 @@
+// frontend/src/pages/ContextoGame.js
 import React, { useEffect, useState } from 'react';
 import { scrollbarStyles } from '../customStyles/scrollBarStyles';
 import LeftWallComponent from '../components/LeftWallComponent';
@@ -82,20 +83,20 @@ export default function ContextoGame() {
                 </div>
             ) : null}
             <div className="row">
-                <LeftWallComponent/>
+                <LeftWallComponent />
                 <div className="col-12 col-lg-6">
                     <div className="middle-column">
                         <div className="card scrollBar" style={{ overflow: 'auto', overflowX: 'hidden', maxHeight: '100vh' }}>
                             {
                                 (gameDoc.guessed === true || gameDoc.guessNumber >= 6) 
                                 ? <div>Game Over! Display your result here.</div>
-                                : <Wordle document_today={document_today} setGuessWord={setGuessWord}/>
+                                : <Wordle document_today={document_today} setGuessWord={setGuessWord} />
                             }
                             <style>{scrollbarStyles}</style>
                         </div>
                     </div>
                 </div>
-                <RightWallComponent gameDoc={gameDoc}/>
+                <RightWallComponent gameDoc={gameDoc} />
             </div>
         </div>
     );
