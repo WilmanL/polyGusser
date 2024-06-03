@@ -10,8 +10,8 @@ from dataBase import get_db
 from nltk.corpus import words
 import jwt
 
-# @brief: gets the functional access to contexto collection
 loginDataCollection, contextoCollection, userGuessCollection = get_db()
+SECRET_KEY = "your_secret_key"  # Ensure this matches your actual secret key
 
 # @brief: Setup the word for the day in the database if not present
 def wordSetup():
@@ -38,12 +38,10 @@ def findSimilarity(guess_word, wordOfTheDay):
             wordList.append(CharInCommon)
     return wordList
 
-
-# @brief: route to contexto endpoint
 contexto = Blueprint('contexto', __name__)
+
 @contexto.route('/polyguesser/contexto')
 def get_contexto():
-    # Verify token
     token = request.headers.get('Authorization')
     if not token:
         return jsonify({'error': 'Token is missing!'}), 403
@@ -59,15 +57,14 @@ def get_contexto():
     guessed = False
     user_id = ''
     similarity = []
-    guess_word = request.args.get('guess_word', default = '', type = str)
-    user_id = request.args.get('user_id', default = '', type = str)
+    guess_word = request.args.get('guess_word', default='', type=str)
+    user_id = request.args.get('user_id', default='', type=str)
     wordSetup()
     currDate = datetime.now().date()
     result = contextoCollection.find_one({"date": str(currDate)})
     if guess_word != '':
         similarity = findSimilarity(guess_word, result['game_word'])
 
-        # find previous max number, if it exist and update the current guess number
         max_guess_document = userGuessCollection.find_one({"user_id": user_id}, sort=[("guess_number", -1)])
         if max_guess_document is not None:
             max_guess_number = max_guess_document["guess_number"] + 1
@@ -77,7 +74,5 @@ def get_contexto():
         userGuessCollection.insert_one({"user_id": user_id, "guess_number": max_guess_number, "guess_word": guess_word, "date": str(currDate), "guessed": guessed})
         return jsonify(similarity)
     
-    # default return empty
     if not similarity:
         return jsonify([])
-

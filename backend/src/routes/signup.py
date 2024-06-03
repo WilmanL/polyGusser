@@ -2,17 +2,13 @@
 
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from gensim.models import KeyedVectors
-import random
-import json
-from bson.json_util import dumps
 import bcrypt
 from dataBase import get_db
 import jwt
 
-loginCollection = get_db()
-
 signup = Blueprint('signup', __name__)
+loginCollection, contextoCollection, userGuessCollection = get_db()
+SECRET_KEY = "your_secret_key"  # Ensure this matches your actual secret key
 
 @signup.route('/signup', methods=['POST'])
 def userSignup():
@@ -37,5 +33,4 @@ def userSignup():
     
     access_token = jwt.encode({'username': username}, SECRET_KEY)
 
-    # access_token = create_access_token(identity={'username': username})
     return jsonify({"message": "User created successfully", "user_id": user_id, "access_token": access_token}), 201

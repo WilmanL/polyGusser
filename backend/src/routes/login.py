@@ -2,39 +2,14 @@
 
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from gensim.models import KeyedVectors
-import random
-import json
-from bson.json_util import dumps
-from dataBase import get_db
 import bcrypt
+from dataBase import get_db
 import jwt
-import datetime
 
 SECRET_KEY = "your_secret_key"  # Replace with a secure key
 
-loginCollection, contextoCollection, userGuessCollection = get_db()  # Obtain both database and collection objects
-
 login = Blueprint('login', __name__)
-
-@login.route('/signup', methods=['POST'])
-def signup_user():
-    data = request.get_json()
-    username = data['username']
-
-    # firstname = data['firstname']
-    # lastname = data['email']
-    # email = data['email']
-
-    password = data['password']
-
-    if loginCollection.find_one({"username": username}):
-        return jsonify({'message': 'Username already exists'}), 400
-
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    loginCollection.insert_one({'username': username, 'password': hashed_password.decode('utf-8')})
-    
-    return jsonify({'message': 'User created successfully'}), 201
+loginCollection, contextoCollection, userGuessCollection = get_db()  # Obtain both database and collection objects
 
 @login.route('/login', methods=['POST'])
 def login_user():
@@ -44,9 +19,9 @@ def login_user():
 
     user = loginCollection.find_one({"username": username})
 
-    if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
-        token = jwt.encode({'username': username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)}, SECRET_KEY)
-        return jsonify({'token': token})
+    if user and bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):  # Fixing the syntax error here
+        token = jwt.encode({'username': username, 'exp': datetime.utcnow() + datetime.timedelta(hours=1)}, SECRET_KEY)
+        return jsonify({'user_id': str(user['_id']), 'token': token})  # Ensure user_id is returned as a string
     
     return jsonify({'message': 'Invalid username or password'}), 401
 
@@ -58,7 +33,9 @@ def token_required(f):
 
         try:
             jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        except:
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'Token has expired!'}), 403
+        except jwt.InvalidTokenError:
             return jsonify({'message': 'Invalid token!'}), 403
 
         return f(*args, **kwargs)

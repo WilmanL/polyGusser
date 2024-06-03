@@ -1,24 +1,24 @@
-//  frontend/src/App.js
+// frontend/src/App.js
 
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Messages from "./pages/Messages";
 import Wall from "./pages/Wall";
-import Navigation from "./navigation/Navigation";
+import Navigation from "./navigation/Navigation"; // Adjusted path
 import ContextoGame from "./pages/ContextoGame";
-import { loginUser, signupUser } from "./pages/authentication";
-import Login from "./pages/login";
+import Login from "./pages/login"; // Adjusted path
+import Signup from "./pages/signup"; // Adjusted path
 
 function App() {
     const [message, setMessage] = useState("");
 
     return (
-        <div className="App" style={{overflow: 'hidden'}}>
+        <div className="App" style={{ overflow: 'hidden' }}>
             <Router>
                 <Navigation />
                 <Routes>
-                    <Route path="/polygusser/login" element={<Login handleSubmit={loginUser} buttonLabel="Log In" />} />
-                    <Route path="/polygusser/signup" element={<Login handleSubmit={signupUser} buttonLabel="Sign Up" />} />
+                    <Route path="/polygusser/login" element={<Login />} />
+                    <Route path="/polygusser/signup" element={<Signup />} />
                     <Route path="/polygusser/home" element={<ProtectedRoute component={Wall} />} />
                     <Route path="/polygusser/contextoGame" element={<ProtectedRoute component={ContextoGame} />} />
                     <Route path="/*" element={<Navigate to="/polygusser/login" />} />
