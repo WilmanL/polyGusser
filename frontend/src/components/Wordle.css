@@ -1,0 +1,420 @@
+@import url("https://fonts.googleapis.com/css?family=Yantramanav:700|Roboto:800");
+
+.wordle {
+  width: 500px;
+  height: 100vh;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.line {
+  height: 1px;
+  left: 0;
+  position: absolute;
+  top: 50px;
+  width: 500px;
+  background-color: #3a3a3c;
+}
+
+.title{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 49px;
+  min-width: 248px;
+  justify-content: center;
+}
+.title1 {
+  color: #D7DADC;
+  letter-spacing: 5.33px;
+  min-height: 49px;
+  width: 177px;
+  font-size: 41px;
+  font-weight: 300;
+  margin-top: 5px;
+  font-family: 'Yantramanav', sans-serif;
+
+}
+
+.title2 {
+  color: #E2CA4C;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.88px;
+  margin-bottom: 0.35px;
+  margin-left: 9px;
+  min-height: 26px;
+  min-width: 61px;
+  transform: rotate(9.00deg);
+}
+
+.title3 {
+  color: #0d68a5;
+  letter-spacing: 3px;
+  min-height: 30px;
+  width: 150px;
+  font-size: 30px;
+  font-weight: 400;
+  margin-top: 10px;
+  font-family: 'Yantramanav', sans-serif;
+}
+
+.title4 {
+  color: #375e4a;
+  letter-spacing: 2px;
+  min-height: 25px;
+  font-size: 25px;
+  font-weight: 300;
+  margin-top: 25px;
+  font-family: 'Yantramanav', sans-serif;
+}
+
+.bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 500px;
+}
+
+.words{
+  height: 400px;
+  width: 340px;
+  /* background-color: #D7DADC; */
+  margin: 5%;
+  /* margin-top: 8vh; */
+}
+
+.keyboard{
+  height: 200px;
+  width: 486px;
+  /* background-color: #D7DADC; */
+  margin: auto;
+  margin-bottom: 40%;
+  /* margin-top: 8vh; */
+}
+
+
+.Empty{
+  /* background-color: rgb(223, 195, 195); */
+  color: #D7DADC;
+  height: 58px;
+  line-height: 58px;
+  width: 66px;
+  border: 2px solid;
+  margin-left: 6px;
+  font-size: 38px;
+  font-family: 'Yantramanav', sans-serif;
+  text-align: center;
+}
+
+.Yellow{
+  color: #D7DADC;
+  background-color: #b59f3a;
+  height: 58px;
+  line-height: 58px;
+  width: 66px;
+  margin-left: 6px;
+  font-size: 38px;
+  font-family: 'Yantramanav', sans-serif;
+  text-align: center;
+}
+
+.Green{
+  color: #D7DADC;
+  background-color: #538d4e;
+  height: 58px;
+  line-height: 58px;
+  width: 66px;
+  margin-left: 6px;
+  font-size: 38px;
+  font-family: 'Yantramanav', sans-serif;
+  text-align: center;
+}
+
+.Gray{
+  background-color: #3a3a3c;
+  color: #D7DADC;
+  height: 58px;
+  line-height: 58px;
+  width: 66px;
+  margin-left: 6px;
+  font-size: 38px;
+  font-family: 'Yantramanav', sans-serif;
+  text-align: center;
+}
+
+
+.cellRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 340px;
+  margin-top: 6px;
+}
+
+.keyRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: relative;
+  margin-top: 8px;
+}
+
+.keyRow2{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: relative;
+  margin-left: 23px;
+  margin-right: 23px;
+  margin-top: 8px;
+}
+
+.Emptykey{
+margin: 0.5%;
+  background-color: #808384; 
+  border-radius: 5px;
+  height: 58px;
+  line-height: 58px;
+  min-width: 43px;
+  /* left: 6px; */
+  color: #D7DADC;
+  font-size: 15px;
+  font-family: 'Yantramanav', sans-serif;
+  text-align: center;
+  cursor: pointer;
+}
+
+.Graykey{
+    margin: 0.5%;
+  background-color: #3a3a3c; 
+  border-radius: 5px;
+  height: 58px;
+  line-height: 58px;
+  min-width: 43px;
+  /* left: 6px; */
+  color: #D7DADC;
+  font-size: 15px;
+  font-family: 'Yantramanav', sans-serif;
+  text-align: center;
+  cursor: pointer;
+}
+
+.Yellowkey{
+    margin: 0.5%;
+  background-color: #b59f3a; 
+  border-radius: 5px;
+  height: 58px;
+  line-height: 58px;
+  min-width: 43px;
+  /* left: 6px; */
+  color: #D7DADC;
+  font-size: 15px;
+  font-family: 'Yantramanav', sans-serif;
+  text-align: center;
+  cursor: pointer;
+}
+
+.result-card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  padding: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.Greenkey{
+    margin: 0.5%;
+  background-color: #538d4e; 
+  border-radius: 5px;
+  height: 58px;
+  line-height: 58px;
+  min-width: 43px;
+  /* left: 6px; */
+  color: #D7DADC;
+  font-size: 15px;
+  font-family: 'Yantramanav', sans-serif;
+  text-align: center;
+  cursor: pointer;
+
+}
+
+.Enterkey{
+    margin: 0.5%;
+  background-color: #808384;
+  border-radius: 5px;
+  height: 58px;
+  line-height: 58px;
+  min-width: 64px;
+  /* left: 6px; */
+  color: #D7DADC;
+  font-size: 15px;
+  font-family: 'Yantramanav', sans-serif;
+  text-align: center;
+  cursor: pointer;
+}
+
+.Deletekey{
+    margin: 0.5%;
+  background-color: #808384;
+  border-radius: 5px;
+  height: 58px;
+  line-height: 58px;
+  min-width: 64px;
+  /* left: 6px; */
+  color: #D7DADC;
+  font-size: 15px;
+  font-family: 'Yantramanav', sans-serif;
+  text-align: center;
+  cursor: pointer;
+}
+
+.deleteimg{
+  height: 29px;
+  width: 29px;
+  padding-top: 21%;
+}
+
+.restart{
+  height: 13px;
+  width: 40px;
+  margin-top: 6px;
+  margin-left: 10px;
+  margin-right: 50px;
+}
+
+.status{
+  width: 450px;
+  height: 400px;
+  background-color: #121213;
+  color: #ffffff;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.statustitle{
+  text-align: center;
+  font-weight: 200;
+  font-family: 'Yantramanav', sans-serif;
+  height: min-content;
+  margin: 0;
+  font-size: 19px;
+  margin-bottom: 6px;
+}
+
+.statuscancel{
+  text-align: end;
+  cursor: pointer;
+  margin:0;
+}
+
+.statuscount{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.statusnum{
+ font-size: 35px;
+ margin: 0;
+
+}
+
+.statusname{
+ font-size: 12px;
+ width: 33px;
+ margin: auto;
+}
+
+.statusitem{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.guesscount{
+  display: flex;
+  flex-direction: row;
+  justify-self: flex-start;
+  margin:0;
+  height: 20px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.guessA{
+  margin: 0;
+  margin-right: 4px;
+  padding-top: 2px;
+  font-size: 13px;
+}
+
+.guessB{
+  margin: 0;
+  font-weight:bold;
+  font-size: 15px;
+  padding-top: 2px;
+  text-align: end;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+
+.statusbuttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+
+.flipin{
+  animation-name: flip-in;
+  animation-duration: 0.5s;
+}
+
+.flipout{
+  animation-name: flip-out;
+  animation-duration: 0.5s;
+}
+
+.shaking {
+  animation: shake 0.65s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes flip-out {
+  from {transform: rotateX(-90deg);}
+  to {transform: rotateX(0);}
+}
+
+@keyframes flip-in {
+  from {transform: rotateX(0);}
+  to {transform: rotateX(-90deg);}
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}

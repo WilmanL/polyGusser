@@ -5,37 +5,53 @@ import random
 import json
 from bson.json_util import dumps
 from dataBase import get_db
+from nltk.corpus import words
 
 # @brief: gets the functional access to contexto collection
-contextoCollection, userGuessCollection = get_db()
+contextoCollection, userGuessCollection, leaderboardCollection = get_db()
 
 # @brief: Setup the word for the day in the database if not present
 def wordSetup():
     currDate = datetime.now().date()
     result = contextoCollection.find_one({"date": str(currDate)})
-    print(result)
     if result is None:
-        word2vec_file = './models/glove.6B.50d.word2vec.txt'
-        model = KeyedVectors.load_word2vec_format(word2vec_file, binary=False)
-        words =  model.index_to_key
-        random_word = random.choice(words)
+        word_list = [word for word in words.words() if len(word) == 5]
+        random_word = random.choice(word_list).lower()
         word_length = len(random_word)
         contextoCollection.insert_one({"date": str(currDate), "game_word": random_word, "game_word_length": word_length})
 
 def findSimilarity(guess_word, wordOfTheDay):
-    word2vec_file = './models/glove.6B.50d.word2vec.txt'
-    model = KeyedVectors.load_word2vec_format(word2vec_file, binary=False)
-    similarity = model.similarity(wordOfTheDay, guess_word)
-    return similarity
+    wordList = []
+    guess_word = guess_word.lower()
+    for i in range(len(guess_word)):
+        if guess_word[i] == wordOfTheDay[i]:
+            CharInCommon = {'index': i, 'guessCharacter': guess_word[i], 'color': 'green'}
+            wordList.append(CharInCommon)
+        elif guess_word[i] in wordOfTheDay:
+            CharInCommon = {'index': i, 'guessCharacter': guess_word[i], 'color': 'yellow'}
+            wordList.append(CharInCommon)
+        else:
+            CharInCommon = {'index': i, 'guessCharacter': guess_word[i], 'color': 'grey'}
+            wordList.append(CharInCommon)
+    return wordList
 
+# @brief: check if the word is successfully guessed or not
+def guess_update(wordList):
+    guessed = True
+    for i in range(len(wordList)):
+        if wordList[i]['color'] != 'green':
+            guessed = False
+            break
+    return guessed
 
 # @brief: route to contexto endpoint
 contexto = Blueprint('contexto', __name__)
 @contexto.route('/polygusser/contexto')
 def get_contexto():
-    print('contexto called')
     guess_word = ''
+    guessed = False
     user_id = ''
+    similarity = []
     guess_word = request.args.get('guess_word', default = '', type = str)
     user_id = request.args.get('user_id', default = '', type = str)
     wordSetup()
@@ -51,16 +67,38 @@ def get_contexto():
         else:
             max_guess_number = 1
         
-        userGuessCollection.insert_one({"user_id": user_id, "guess_number": max_guess_number, "guess_word": guess_word, "similarity": float(similarity), "date": str(currDate)})
-
-        document_today = userGuessCollection.find({"date": str(currDate), "user_id": user_id})
-        document_today = [json.loads(dumps(doc)) for doc in document_today]
-        return jsonify(document_today)
+        guessed = guess_update(similarity)
+        
+        userGuessCollection.insert_one({"user_id": user_id, "guess_number": max_guess_number, "guess_word": guess_word, "date": str(currDate), "guessed": guessed})
+        return jsonify({"similarity": similarity, "guessed": guessed, "guessNumber": max_guess_number})
     
-    # default return empty string
-    document_today = userGuessCollection.find({"date": str(currDate), "user_id": user_id})
-    if document_today is None:
+    # default return empty
+    if not similarity:
         return jsonify([])
-    document_today = [json.loads(dumps(doc)) for doc in document_today]
-    return jsonify(document_today)
+
+
+# @brief: route to get result of the day
+@contexto.route('/polygusser/contexto_result')
+def get_contexto_result():
+    user_id = ''
+    user_id = request.args.get('user_id', default = '', type = str)
+    currDate = datetime.now().date()
+    result = userGuessCollection.find_one({"user_id": user_id, "date": str(currDate)}, sort=[("guess_number", -1)])
+    wordInfo = contextoCollection.find_one({"date": str(currDate)})
+
+    # temp set the userName
+    user_name = "Dhruv"
+    
+    # check if the user is successfully guessed the word
+    if result is not None and result["guessed"]:
+        leaderboardCollection.insert_one({"user_id": result["user_id"], "user_name": user_name, "date": str(currDate), "wordOfDay": wordInfo["game_word"], "number_of_guesses": result["guess_number"]})
+    
+    return dumps({"result": result, "wordInfo": wordInfo})
+
+# @brief: route to get leaderboard
+@contexto.route('/polygusser/leaderboard')
+def get_leaderboard():
+    currDate = datetime.now().date()
+    result = leaderboardCollection.find({"date": str(currDate)}, sort=[("number_of_guesses", 1)])
+    return dumps(result)
 
