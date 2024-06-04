@@ -1,8 +1,15 @@
-import './Wordle.css';
 import { useState, useEffect} from "react";
+import dayLight from "../assests/dayLight.jpg";
+import nightLight from "../assests/nightLight.png";
+
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 
 export default function WordleResult({user_id}) {
-
     const [wordOfTheDay, setWordOfTheDay] = useState('');
     const [numberOfGuesses, setNumberOfGuesses] = useState(0);
     const [date, setDate] = useState('');
@@ -28,31 +35,48 @@ export default function WordleResult({user_id}) {
                 console.error('There has been a problem with your fetch operation:', error);
             });
     }, [user_id]);
-
   return (
-    <div className="wordle">
-        <div className="line"></div>
-        <div className="title">
-            <div className="title1">PoLy</div>
-            <div className="title2">GUesSeR</div>
-        </div>
-        <div className="bar"></div>
-
-        <div className='words'>
-            <div className="result-card">
-                <div className="title3">Result:</div>
-                <div className="title4">Word of the Day : {wordOfTheDay}</div>
-                <div className="title4">Total Guesses : {numberOfGuesses}</div>
-                <div className="title4">date : {date}</div>
-                <div className="title4">Last Guess : {lastGuess}</div>
-                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <div style={{fontSize: '50px'}}>{guessed ? '😊' : '😞'}</div>
-                </div>
-            </div>
-        </div>
-
-
-        <div className="keyboard"/>
-    </div>
-  )
+    <Card sx={{ maxWidth: '100%' }}>
+      <CardActionArea>
+        { guessed ?
+            <CardMedia
+            component="img"
+            height="340"
+            image={dayLight}
+            alt="day Light"
+            />
+            :
+            <CardMedia
+            component="img"
+            height="340"
+            image={nightLight}
+            alt="night Light"
+            />
+        }
+        <CardContent>
+            <Typography gutterBottom variant="h5" component="div" color="primary">
+                Result
+            </Typography>
+            <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 'bold', fontFamily: 'cursive' }}>
+                Word of the Day : {wordOfTheDay}
+            </Typography>
+            <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 'bold', fontFamily: 'cursive' }}>
+                Total Guesses : {numberOfGuesses}
+            </Typography>
+            <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 'bold', fontFamily: 'cursive' }}>
+                Date : {date}
+            </Typography>
+            <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 'bold', fontFamily: 'cursive' }}>
+                Last Guess : {lastGuess}
+            </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+      </CardActions>
+    </Card>
+  );
 }
+
