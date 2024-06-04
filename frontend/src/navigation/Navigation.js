@@ -13,7 +13,6 @@ export default function Navigation() {
             <div className="collapse navbar-collapse" id="responsive">
                 <ul className="navbar-nav mr-auto text-capitalize">
                     <li className="nav-item"><Link to="/polygusser/home" className="nav-link active">home</Link></li>
-                    <li className="nav-item"><Link to="/polygusser/messages" className="nav-link" data-toggle="modal">messages</Link></li>
                     <li className="nav-item"><Link to="/polygusser/contextoGame" className="nav-link">game</Link></li>
                 </ul>
 

@@ -15,9 +15,6 @@ function App() {
           <Route path="/polygusser/contextoGame" element={<ContextoGame/>} />
           <Route path="/*" element={<Wall/>} />
         </Routes>
-        <Routes>
-          <Route path="/polygusser/messages" element={<Messages/>} />
-        </Routes>
       </Router>
     </div>
   );

@@ -61,7 +61,7 @@ def get_contexto():
         similarity = findSimilarity(guess_word, result['game_word'])
 
         # find previous max number, if it exist and update the current guess number
-        max_guess_document = userGuessCollection.find_one({"user_id": user_id}, sort=[("guess_number", -1)])
+        max_guess_document = userGuessCollection.find_one({"user_id": user_id, "date": str(currDate)}, sort=[("guess_number", -1)])
         if max_guess_document is not None:
             max_guess_number = max_guess_document["guess_number"] + 1
         else:
