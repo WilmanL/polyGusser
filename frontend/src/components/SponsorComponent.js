@@ -1,5 +1,5 @@
 import React from 'react'
-import testImage from '../assests/test.jpg';
+import testImage from '../assests/NekoAtsumeSponsor.jpg';
 
 export default function SponsorComponent() {
   return (

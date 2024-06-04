@@ -1,5 +1,5 @@
 import React from 'react'
-import testImage from '../assests/test.jpg';
+import testImage from '../assests/JosuePFP.jpg';
 
 export default function ModalMessage() {
   return (
@@ -8,7 +8,7 @@ export default function ModalMessage() {
         <li className="media hover-media">
             <img src={testImage} alt="img" width="60px" height="60px" className="rounded-circle mr-3"/>
             <div className="media-body text-dark">
-                <h6 className="media-header">Jchob Thunder and <strong> 1 others</strong></h6>
+                <h6 className="media-header">Josue H and <strong> 1 others</strong></h6>
                 <p className="media-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
             </div>
         </li>

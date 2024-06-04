@@ -1,5 +1,7 @@
 import React from 'react'
-import testImage from '../assests/test.jpg';
+import testImage from '../assests/NayeliPFP.jpg';
+import DrewImage from '../assests/DrewPFP.jpg';
+
 
 export default function SuggestionComponent() {
   return (
@@ -9,12 +11,12 @@ export default function SuggestionComponent() {
             <div className="row no-gutters d-none d-lg-flex">
                 <div className="col-6 p-1">
                 <img src={testImage} alt="img" width="80px" height="80px" className="rounded-circle mb-4" />
-                <img src={testImage} alt="img" width="80px" height="80px" className="rounded-circle" />
+                <img src={DrewImage} alt="img" width="80px" height="80px" className="rounded-circle" />
                 </div>
                 <div className="col-6 p-1 text-left">
-                <h6>Jacob Thornton @fat</h6>
+                <h6>Nayeli M</h6>
                 <a href="#" className="btn btn-outline-info btn-sm mb-3"><i className="fas fa-user-friends"></i>Follow</a>
-                <h6>Mark Otto</h6>
+                <h6>Saumitra T</h6>
                 <a href="#" className="btn btn-outline-info btn-sm"><i className="fas fa-user-friends"></i>Follow</a>
                 </div>
             </div>
