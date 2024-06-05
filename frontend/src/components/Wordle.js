@@ -19,6 +19,47 @@ export default function Wordle({ document_today, setGuessWord }) {
         }
     }, [document_today]);
 
+    const handleInputChange = useCallback((rowIndex, blockIndex) => (event) => {
+        let newWordleInputs = [...wordleInputs];
+        let word = newWordleInputs[rowIndex].split('');
+
+        if (word.length >= 5) {
+            return; // If it is, prevent further input
+        }
+
+        word[blockIndex] = event.target.value;
+        newWordleInputs[rowIndex] = word.join('');
+        setWordleInputs(newWordleInputs);
+
+        // Move focus to next input field
+        if (blockIndex < 4) {
+            const nextInput = document.getElementById(`input-${rowIndex}-${blockIndex + 1}`);
+            if (nextInput) nextInput.focus();
+        }
+    }, [wordleInputs]);
+
+    const handleKeyDown = useCallback((rowIndex, blockIndex) => (event) => {
+        if (event.key === 'Enter') {
+            let word = wordleInputs[rowIndex];
+            if (word.length === 5) {
+                console.log(word);
+                setGuessWord(word);
+            }
+        } else if (event.key === 'Backspace') {
+            let newWordleInputs = [...wordleInputs];
+            let word = newWordleInputs[rowIndex].split('');
+            word[blockIndex] = '';
+            newWordleInputs[rowIndex] = word.join('');
+            setWordleInputs(newWordleInputs);
+
+            // Move focus to previous input field
+            if (blockIndex > 0) {
+                const previousInput = document.getElementById(`input-${rowIndex}-${blockIndex - 1}`);
+                if (previousInput) previousInput.focus();
+            }
+        }
+    }, [wordleInputs, setGuessWord]);
+
     const renderKeyboard = useCallback((keyClass, keyRow) => {
         let keys = [];
         for (let i = 0; i < keyRow.length; i++) {
@@ -88,7 +129,7 @@ export default function Wordle({ document_today, setGuessWord }) {
             }
         }
         return row;
-    }, [referenceDoc, wordleInputs]);
+    }, [referenceDoc, wordleInputs, handleInputChange, handleKeyDown]);
 
     useEffect(() => {
         if (referenceDoc.length > 0) {
@@ -100,47 +141,6 @@ export default function Wordle({ document_today, setGuessWord }) {
             }
         }
     }, [referenceDoc, renderBlockChars, renderKeyboard]);
-
-    const handleInputChange = (rowIndex, blockIndex) => (event) => {
-        let newWordleInputs = [...wordleInputs];
-        let word = newWordleInputs[rowIndex].split('');
-
-        if (word.length >= 5) {
-            return; // If it is, prevent further input
-        }
-
-        word[blockIndex] = event.target.value;
-        newWordleInputs[rowIndex] = word.join('');
-        setWordleInputs(newWordleInputs);
-
-        // Move focus to next input field
-        if (blockIndex < 4) {
-            const nextInput = document.getElementById(`input-${rowIndex}-${blockIndex + 1}`);
-            if (nextInput) nextInput.focus();
-        }
-    };
-
-    const handleKeyDown = (rowIndex, blockIndex) => (event) => {
-        if (event.key === 'Enter') {
-            let word = wordleInputs[rowIndex];
-            if (word.length === 5) {
-                console.log(word);
-                setGuessWord(word);
-            }
-        } else if (event.key === 'Backspace') {
-            let newWordleInputs = [...wordleInputs];
-            let word = newWordleInputs[rowIndex].split('');
-            word[blockIndex] = '';
-            newWordleInputs[rowIndex] = word.join('');
-            setWordleInputs(newWordleInputs);
-
-            // Move focus to previous input field
-            if (blockIndex > 0) {
-                const previousInput = document.getElementById(`input-${rowIndex}-${blockIndex - 1}`);
-                if (previousInput) previousInput.focus();
-            }
-        }
-    };
 
     return (
         <div className="wordle">
