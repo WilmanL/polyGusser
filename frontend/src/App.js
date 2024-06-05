@@ -3,9 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Wall from "./pages/Wall";
 import Navigation from "./navigation/Navigation";
 import ContextoGame from "./pages/ContextoGame";
-import Auth from "./pages/Auth";
-import Register from "./pages/Register";
-import {AuthProvider} from 'react-auth-kit';
+// import Auth from "./pages/Auth";
+// import Register from "./pages/Register";
 
 function App() {
   return (
@@ -16,8 +15,8 @@ function App() {
           <Routes>
             <Route path="/polygusser/home" element={<Wall/>} />
             <Route path="/polygusser/contextoGame" element={<ContextoGame/>} />
-            <Route path="/polygusser/login" element={<Auth/>} />
-            <Route path="/polygusser/Register" element={<Register/>} />
+            {/* <Route path="/polygusser/login" element={<Auth/>} /> */}
+            {/* <Route path="/polygusser/Register" element={<Register/>} /> */}
             <Route path="/*" element={<Wall/>} />
           </Routes>
         </Router>
