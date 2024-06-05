@@ -10,6 +10,7 @@ def get_db():
         contextoCollection = db["contexto"]
         userGuessCollection = db["userGuessSchema"]
         leaderboardCollection = db["leaderBoard"]
-        return (contextoCollection, userGuessCollection, leaderboardCollection)
+        userLoginCollection = db["userLogin"]
+        return (contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection)
     except pymongo.errors.ServerSelectionTimeoutError as err:
         print("Failed to connect to server:", err)

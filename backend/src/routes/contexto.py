@@ -1,14 +1,12 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from gensim.models import KeyedVectors
 import random
-import json
 from bson.json_util import dumps
 from dataBase import get_db
 from nltk.corpus import words
 
 # @brief: gets the functional access to contexto collection
-contextoCollection, userGuessCollection, leaderboardCollection = get_db()
+contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection = get_db()
 
 # @brief: Setup the word for the day in the database if not present
 def wordSetup():

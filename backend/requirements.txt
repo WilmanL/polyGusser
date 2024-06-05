@@ -5,8 +5,5 @@ pymongo
 flask_cors
 nltk
 # for authentication
-flask_login 
-flask_bcrypt
-flask_wtf
-wtforms
-email_validator
+flask_jwt_extended
+bcrypt
