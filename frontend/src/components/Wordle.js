@@ -29,7 +29,7 @@ export default function Wordle({document_today, setGuessWord}) {
                 renderKeyboard("Emptykey", 2);
             }
         }
-    }, [referenceDoc]);
+    }, [referenceDoc, renderBlockChars, renderKeyboard]);
 
 
     const renderKeyboard = (keyClass, keyRow) => {
