@@ -19,7 +19,7 @@ export default function ContextoGame() {
     // component mounted
     useEffect(() => {
         setIsLoading(true);
-        fetch(`http://localhost:5000/polygusser/contexto?user_id=${user_id}`)
+        fetch(`3.145.19.247:5000/polygusser/contexto?user_id=${user_id}`)
             .then(response => response.json()) // parse the JSON from the body of the response
             .then(data => {
                 console.log(data);
