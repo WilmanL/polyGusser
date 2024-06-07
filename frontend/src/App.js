@@ -13,10 +13,10 @@ function App() {
         <Router>
           <Navigation/>
           <Routes>
-            <Route path="/polygusser/home" element={<Wall/>} />
-            <Route path="/polygusser/contextoGame" element={<ContextoGame/>} />
-            {/* <Route path="/polygusser/login" element={<Auth/>} /> */}
-            {/* <Route path="/polygusser/Register" element={<Register/>} /> */}
+            <Route path="/polyguesser/home" element={<Wall/>} />
+            <Route path="/polyguesser/contextoGame" element={<ContextoGame/>} />
+            {/* <Route path="/polyguesser/login" element={<Auth/>} /> */}
+            {/* <Route path="/polyguesser/Register" element={<Register/>} /> */}
             <Route path="/*" element={<Wall/>} />
           </Routes>
         </Router>

@@ -44,7 +44,7 @@ def guess_update(wordList):
 
 # @brief: route to contexto endpoint
 contexto = Blueprint('contexto', __name__)
-@contexto.route('/polygusser/contexto')
+@contexto.route('/polyguesser/contexto')
 def get_contexto():
     guess_word = ''
     guessed = False
@@ -76,7 +76,7 @@ def get_contexto():
 
 
 # @brief: route to get result of the day
-@contexto.route('/polygusser/contexto_result')
+@contexto.route('/polyguesser/contexto_result')
 def get_contexto_result():
     user_id = ''
     user_id = request.args.get('user_id', default = '', type = str)
@@ -94,7 +94,7 @@ def get_contexto_result():
     return dumps({"result": result, "wordInfo": wordInfo})
 
 # @brief: route to get leaderboard
-@contexto.route('/polygusser/leaderboard')
+@contexto.route('/polyguesser/leaderboard')
 def get_leaderboard():
     currDate = datetime.now().date()
     result = leaderboardCollection.find({"date": str(currDate)}, sort=[("number_of_guesses", 1)])
