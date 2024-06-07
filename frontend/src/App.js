@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Wall from "./pages/Wall";
 import Navigation from "./navigation/Navigation";
@@ -9,29 +9,20 @@ import Register from "./pages/Register";
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
-  );
-}
-
-function AppContent() {
-
-  const [ready, setReady] = useState(false);
-
-  return (
-    <div className="App" style={{overflow: 'hidden'}}>
-      <Router>
-        {ready && <Navigation/>}
-        <Routes>
-          <Route path="/polyguesser/home" element={<Wall/>} />
-          <Route path="/polyguesser/contextoGame" element={<ContextoGame/>} />
-          <Route path="/polyguesser/login" element={<Auth setReady = {setReady}/>} />
-          <Route path="/polyguesser/register" element={<Register/>} />
-          <Route path="/*" element={<Auth setReady = {setReady}/>} />
-        </Routes>
-      </Router>
-    </div>
+    // <AuthProvider authType={'cookie'}>
+      <div className="App" style={{overflow: 'hidden'}}>
+        <Router>
+          <Navigation/>
+          <Routes>
+            <Route path="/polygusser/home" element={<Wall/>} />
+            <Route path="/polygusser/contextoGame" element={<ContextoGame/>} />
+            {/* <Route path="/polygusser/login" element={<Auth/>} /> */}
+            {/* <Route path="/polygusser/Register" element={<Register/>} /> */}
+            <Route path="/*" element={<Wall/>} />
+          </Routes>
+        </Router>
+      </div>
+    // </AuthProvider>
   );
 }
 

@@ -3,7 +3,7 @@ import { Button, TextField, Grid, Paper, Typography } from '@mui/material';
 import AuthContext from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-export default function LoginPage({setReady}) {
+export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -12,7 +12,7 @@ export default function LoginPage({setReady}) {
   const {authTokens, setTokens} = useContext(AuthContext)
 
     const handleLogin = async () => {
-        const response = await fetch(`http://3.145.19.247:5000/polyguesser/login?userName=${username}&password=${password}`, {
+        const response = await fetch(`http://localhost:5000/polyguesser/login?userName=${username}&password=${password}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -27,7 +27,6 @@ export default function LoginPage({setReady}) {
           const data = await response.json()
           setTokens(data)
           navigate('/polyguesser/contextoGame');
-          setReady(true);
         } 
         else {
           console.log(response);
