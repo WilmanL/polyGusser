@@ -12,7 +12,7 @@ export default function LeftWallComponent() {
                     <img src={'https://picsum.photos/800/1000'} onError={(e)=>{e.target.onerror = null; e.target.src=testImage}} alt="" className="card-img-top img-fluid" />
                     <div className="card-body text-center">
                     <img src={'https://picsum.photos/800/1000'} onError={(e)=>{e.target.onerror = null; e.target.src=testImage}} alt="img" width="120px" height="120px" className="rounded-circle mt-n5" />
-                    <h5 className="card-title">Saumitra Tiwari</h5>
+                    <h5 className="card-title">Wilman Li</h5>
                     <p className="card-text text-justify mb-2">I wish I was a little bit tallers.</p>
                     <ul className="list-unstyled nav justify-content-center">
                         <li className="nav-item">Friends <br /> <strong>12M</strong></li>

@@ -6,7 +6,7 @@ export default function MiddleWallComponent() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/polyguesser/get_wall')
+    fetch('http://3.145.19.247:5000/polyguesser/get_wall')
       .then(response => response.json())
       .then(data => {setPosts(data);
       });
@@ -21,7 +21,7 @@ export default function MiddleWallComponent() {
             {posts.map((post, index) => (
               <PostContent 
                 key={index} 
-                user_name={'saumitra Tiwari'}
+                user_name={'Wilman Li'}
                 guess_number={post.guess_number} 
                 date={post.date} 
                 last_guess={post.last_guess} 

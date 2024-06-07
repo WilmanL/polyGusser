@@ -95,7 +95,7 @@ def get_contexto_result():
     wordInfo = contextoCollection.find_one({"date": str(currDate)})
 
     # temp set the userName
-    user_name = "Dhruv"
+    user_name = "Wilman Li"
     
     # check if the user is successfully guessed the word
     if result is not None and result["guessed"]:

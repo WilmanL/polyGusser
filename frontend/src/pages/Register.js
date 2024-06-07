@@ -21,7 +21,7 @@ export default function Register() {
             aboutMe: aboutMe,
             username: username,
         };
-        const response = await fetch(`http://localhost:5000/polyguesser/register`, {
+        const response = await fetch(`http://3.145.19.247:5000/polyguesser/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

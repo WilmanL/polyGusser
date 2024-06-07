@@ -38,7 +38,7 @@ export default function WordleResult({user_id}) {
           wordOfTheDay: wordOfTheDay
         };
       
-        fetch('http://localhost:5000/polyguesser/wall', {
+        fetch('http://3.145.19.247:5000/polyguesser/wall', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export default function WordleResult({user_id}) {
       };
 
     useEffect(() => {
-        fetch(`http://localhost:5000/polyguesser/contexto_result?user_id=${user_id}`)
+        fetch(`http://3.145.19.247:5000/polyguesser/contexto_result?user_id=${user_id}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

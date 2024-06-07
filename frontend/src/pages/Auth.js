@@ -12,7 +12,7 @@ export default function LoginPage({setReady}) {
   const {authTokens, setTokens} = useContext(AuthContext)
 
     const handleLogin = async () => {
-        const response = await fetch(`http://localhost:5000/polyguesser/login?userName=${username}&password=${password}`, {
+        const response = await fetch(`http://3.145.19.247:5000/polyguesser/login?userName=${username}&password=${password}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

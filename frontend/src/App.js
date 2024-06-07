@@ -28,7 +28,7 @@ function AppContent() {
           <Route path="/polyguesser/contextoGame" element={<ContextoGame/>} />
           <Route path="/polyguesser/login" element={<Auth setReady = {setReady}/>} />
           <Route path="/polyguesser/register" element={<Register/>} />
-          <Route path="/*" element={<Auth/>} />
+          <Route path="/*" element={<Auth setReady = {setReady}/>} />
         </Routes>
       </Router>
     </div>

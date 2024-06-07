@@ -566,7 +566,7 @@ function LeftWallComponent() {
               columnNumber: 21
             }, this), /*#__PURE__*/(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxDEV)("h5", {
               className: "card-title",
-              children: "Saumitra Tiwari"
+              children: "Wilman Li"
             }, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 15,
@@ -978,7 +978,7 @@ function MiddleWallComponent() {
             marginRight: '-10px'
           },
           children: posts.map((post, index) => /*#__PURE__*/(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxDEV)(_PostContent__WEBPACK_IMPORTED_MODULE_2__["default"], {
-            user_name: 'saumitra Tiwari',
+            user_name: 'Wilman Li',
             guess_number: post.guess_number,
             date: post.date,
             last_guess: post.last_guess,
