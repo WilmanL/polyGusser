@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import NewPostComponent from './NewPostComponent';
 import PostContent from './PostContent';
 import { scrollbarStyles } from '../customStyles/scrollBarStyles';
 
