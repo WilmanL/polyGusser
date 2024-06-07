@@ -6,7 +6,7 @@ export default function SponsorComponent({gameDoc}) {
   const [leaderBoard, setLeaderBoard] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/polyguesser/leaderboard')
+    fetch('http://3.145.19.247:5000/polyguesser/leaderboard')
       .then(response => response.json())
       .then(data => setLeaderBoard(data))
       .catch(error => console.error('Error:', error));

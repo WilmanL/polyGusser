@@ -17,7 +17,7 @@ export default function WordleResult({user_id}) {
     const [guessed, setGuessed] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/polyguesser/contexto_result?user_id=${user_id}`)
+        fetch(`http://3.145.19.247:5000/polyguesser/contexto_result?user_id=${user_id}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
