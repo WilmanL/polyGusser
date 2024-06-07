@@ -9,15 +9,15 @@ import Register from "./pages/Register";
 
 function App() {
   return (
-    // <AuthProvider authType={'cookie'}>
+    <AuthProvider authType={'cookie'}>
       <div className="App" style={{overflow: 'hidden'}}>
         <Router>
           <Navigation/>
           <Routes>
             <Route path="/polygusser/home" element={<Wall/>} />
             <Route path="/polygusser/contextoGame" element={<ContextoGame/>} />
-            {/* <Route path="/polygusser/login" element={<Auth/>} /> */}
-            {/* <Route path="/polygusser/Register" element={<Register/>} /> */}
+            <Route path="/polygusser/login" element={<Auth/>} />
+            <Route path="/polygusser/Register" element={<Register/>} />
             <Route path="/*" element={<Wall/>} />
           </Routes>
         </Router>
