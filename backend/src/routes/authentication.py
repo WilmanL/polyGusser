@@ -39,7 +39,7 @@ def login():
     
     for user in users:
         print(user)
-        if bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        if (bcrypt.checkpw(password.encode('utf-8'), user['password']) and user['user_name'] == user_name):
             expires = timedelta(days=1)
             access_token = create_access_token(identity=user_name, expires_delta=expires)
             return jsonify(access_token=access_token, userId=str(user['_id'])), 200

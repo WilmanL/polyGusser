@@ -8,7 +8,7 @@ export default function Register() {
     const navigate = useNavigate();
 
     const handleRegister = async () => {
-        const response = await fetch('http://localhost:5000/polygusser/register', {
+        const response = await fetch(`http://localhost:5000/polygusser/register?password=${password}&userName=${username}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

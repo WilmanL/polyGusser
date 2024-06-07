@@ -55,6 +55,14 @@ def get_contexto():
     wordSetup()
     currDate = datetime.now().date()
     result = contextoCollection.find_one({"date": str(currDate)})
+
+    # check if user has previously guessed the word or not in all the guesses
+    previous_guesses = userGuessCollection.find({"user_id": user_id, "date": str(currDate)})
+    for guess in previous_guesses:
+        if guess["guessed"]:
+            return jsonify({"similarity": similarity, "guessed": guess["guessed"], "guessNumber": guess["guess_number"]})
+
+
     if guess_word != '':
         similarity = findSimilarity(guess_word, result['game_word'])
 
@@ -89,7 +97,9 @@ def get_contexto_result():
     
     # check if the user is successfully guessed the word
     if result is not None and result["guessed"]:
-        leaderboardCollection.insert_one({"user_id": result["user_id"], "user_name": user_name, "date": str(currDate), "wordOfDay": wordInfo["game_word"], "number_of_guesses": result["guess_number"]})
+        existing_entry = leaderboardCollection.find_one({"user_id": result["user_id"], "date": str(currDate)})
+        if existing_entry is None:
+            leaderboardCollection.insert_one({"user_id": result["user_id"], "user_name": user_name, "date": str(currDate), "wordOfDay": wordInfo["game_word"], "number_of_guesses": result["guess_number"]})    
     
     return dumps({"result": result, "wordInfo": wordInfo})
 

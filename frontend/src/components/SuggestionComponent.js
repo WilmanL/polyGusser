@@ -8,8 +8,8 @@ export default function SuggestionComponent() {
             <h6 className="card-title">Likes <small>.View All</small></h6>
             <div className="row no-gutters d-none d-lg-flex">
                 <div className="col-6 p-1">
-                <img src={testImage} alt="img" width="80px" height="80px" className="rounded-circle mb-4" />
-                <img src={testImage} alt="img" width="80px" height="80px" className="rounded-circle" />
+                <img src={'https://picsum.photos/800/1000'} alt="img" width="80px" height="80px" className="rounded-circle mb-4" />
+                <img src={'https://picsum.photos/800/1000'} alt="img" width="80px" height="80px" className="rounded-circle" />
                 </div>
                 <div className="col-6 p-1 text-left">
                 <h6>Jacob Thornton @fat</h6>

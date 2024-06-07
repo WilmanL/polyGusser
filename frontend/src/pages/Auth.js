@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Button, TextField, Grid, Paper, Typography } from '@mui/material';
-import { useAuth } from 'react-auth-kit'
+import AuthContext from '../components/AuthContext';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-    const auth = useAuth()
+  const {authTokens, setTokens} = useContext(AuthContext)
 
     const handleLogin = async () => {
-        const response = await fetch('http://localhost:5000/polygusser/login', {
+        const response = await fetch(`http://localhost:5000/polygusser/login?userName=${username}&password=${password}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -22,8 +22,7 @@ export default function LoginPage() {
       
         if (response.ok) {
           const data = await response.json()
-          auth.setTokens({token: data.access_token, userId: data.userId})
-          console.log(data);
+          setTokens(data)
         } 
         else {
           console.log(response);
