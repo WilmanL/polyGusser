@@ -14,7 +14,7 @@ function App() {
           <Navigation/>
           <Routes>
             <Route path="/polyguesser/home" element={<Wall/>} />
-            <Route path="/polyguesser/contextoGame" element={<ContextoGame/>} />
+            <Route path="/polyguesser/game" element={<ContextoGame/>} />
             {/* <Route path="/polyguesser/login" element={<Auth/>} /> */}
             {/* <Route path="/polyguesser/Register" element={<Register/>} /> */}
             <Route path="/*"  element={<Wall/>} />
