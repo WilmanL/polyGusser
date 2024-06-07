@@ -13,18 +13,25 @@ export default function Register() {
     const navigate = useNavigate();
 
     const handleRegister = async () => {
-        // You might want to update this part to include the new fields
-        const response = await fetch(`http://localhost:5000/polygusser/register?password=${password}&userName=${username}`, {
+        let userBioData = {
+            school: school,
+            work: work,
+            location: location,
+            from: from,
+            aboutMe: aboutMe,
+            username: username,
+        };
+        const response = await fetch(`http://localhost:5000/polyguesser/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             userName: username,
-            password: password
+            password: password,
+            userBioData: userBioData
         })
         })
-    
         if (response.ok) {
             navigate('/polyguesser/login');
         } else {
@@ -99,7 +106,7 @@ export default function Register() {
                 label="about me"
                 style={{ width: '30%' }}
                 variant="outlined"
-                value={from}
+                value={aboutMe}
                 onChange={(e) => setAboutMe(e.target.value)}
                 />
             </Grid>

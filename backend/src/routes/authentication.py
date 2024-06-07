@@ -7,6 +7,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from datetime import timedelta
 import bcrypt
+import json
 
 # @brief: gets the functional access to contexto collection
 contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection, wallSchemaCollection, userBioSchemaCollection = get_db()
@@ -15,22 +16,26 @@ contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollect
 auth = Blueprint('auth', __name__)
 @auth.route('/polyguesser/register', methods=['POST'])
 def register():
-    user_name = request.args.get('userName', default = '', type = str)
-    password = request.args.get('password', default = '', type = str)
-
-
+    data = request.get_json()
+    user_name = data.get('userName', '')
+    password = data.get('password', '')
+    userBioData = data.get('userBioData', {})
 
     print(user_name)
     print(password)
 
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-    userLoginCollection.insert_one({
+    # Insert user login data
+    userLoginData = {
         "user_name": user_name,
         "password": hashed_password,
-    })
+    }
+    userLoginCollection.insert_one(userLoginData)
 
-    # add user bio data to userBioSchemaCollection
+    # Insert user bio data
+    userBioData['userId'] = userLoginData['_id']
+    userBioSchemaCollection.insert_one(userBioData)
 
     return jsonify({"msg": "User created successfully"}), 200
 
@@ -46,7 +51,7 @@ def login():
         if (bcrypt.checkpw(password.encode('utf-8'), user['password']) and user['user_name'] == user_name):
             expires = timedelta(days=1)
             access_token = create_access_token(identity=user_name, expires_delta=expires)
-            return jsonify(access_token=access_token, userId=str(user['_id'])), 200
+            return jsonify(access_token=access_token, userId=str(user['_id']), userName=str(user['user_name'])), 200
     
     return jsonify({"msg": "Bad username or password"}), 401
 
