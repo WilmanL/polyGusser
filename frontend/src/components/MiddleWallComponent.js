@@ -7,10 +7,9 @@ export default function MiddleWallComponent() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch('http://3.145.19.247:5000/polyguesser/get_wall')
+    fetch('http://localhost:5000/polyguesser/get_wall')
       .then(response => response.json())
       .then(data => {setPosts(data);
-        console.log(data[0].wordOfTheDay);
       });
   }, []);
 
@@ -19,7 +18,7 @@ export default function MiddleWallComponent() {
       <div className="middle-column">
         <div className="card scrollBar" style={{ overflow: 'auto', overflowX: 'hidden', maxHeight: '100vh' }}>
           <div style={{ paddingRight: '10px', marginRight: '-10px' }}>
-            <NewPostComponent placeholder='New Message'/>
+            {/* <NewPostComponent placeholder='New Message'/> */}
             {posts.map((post, index) => (
               <PostContent 
                 key={index} 

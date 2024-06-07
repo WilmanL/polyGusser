@@ -38,7 +38,7 @@ export default function WordleResult({user_id}) {
           wordOfTheDay: wordOfTheDay
         };
       
-        fetch('http://3.145.19.247:5000/polyguesser/wall', {
+        fetch('http://localhost:5000/polyguesser/wall', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export default function WordleResult({user_id}) {
       };
 
     useEffect(() => {
-        fetch(`http://3.145.19.247:5000/polyguesser/contexto_result?user_id=${user_id}`)
+        fetch(`http://localhost:5000/polyguesser/contexto_result?user_id=${user_id}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -91,7 +91,7 @@ export default function WordleResult({user_id}) {
             component="img"
             height="340"
             onError={(e)=>{e.target.onerror = null; e.target.src=dayLight}}
-            image={'https://picsum.photos/800/1000'}
+            image={`https://picsum.photos/800/1000?${new Date().getTime()}`}
             alt="night Light"
             />
         }

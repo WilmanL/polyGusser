@@ -6,7 +6,7 @@ from dataBase import get_db
 from nltk.corpus import words
 
 # @brief: gets the functional access to contexto collection
-contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection, wallSchemaCollection = get_db()
+contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection, wallSchemaCollection, userBioSchemaCollection = get_db()
 
 # @brief: Setup the word for the day in the database if not present
 def wordSetup():
@@ -61,6 +61,8 @@ def get_contexto():
     for guess in previous_guesses:
         if guess["guessed"]:
             return jsonify({"similarity": similarity, "guessed": guess["guessed"], "guessNumber": guess["guess_number"]})
+        elif guess["guess_number"] == 6:
+            return jsonify({"similarity": similarity, "guessed": False, "guessNumber": guess["guess_number"]})
 
 
     if guess_word != '':

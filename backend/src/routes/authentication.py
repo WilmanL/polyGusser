@@ -9,7 +9,7 @@ from datetime import timedelta
 import bcrypt
 
 # @brief: gets the functional access to contexto collection
-contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection, wallSchemaCollection = get_db()
+contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection, wallSchemaCollection, userBioSchemaCollection = get_db()
 
 # @brief: route to auth endpoint
 auth = Blueprint('auth', __name__)
@@ -17,6 +17,8 @@ auth = Blueprint('auth', __name__)
 def register():
     user_name = request.args.get('userName', default = '', type = str)
     password = request.args.get('password', default = '', type = str)
+
+
 
     print(user_name)
     print(password)
@@ -27,6 +29,8 @@ def register():
         "user_name": user_name,
         "password": hashed_password,
     })
+
+    # add user bio data to userBioSchemaCollection
 
     return jsonify({"msg": "User created successfully"}), 200
 
@@ -45,3 +49,11 @@ def login():
             return jsonify(access_token=access_token, userId=str(user['_id'])), 200
     
     return jsonify({"msg": "Bad username or password"}), 401
+
+
+# returns the entire collection of userBioSchema
+@auth.route('/polyguesser/userBio')
+def getUserBio():
+    userId = request.args.get('userId', default = '', type = str)
+    userBio = userBioSchemaCollection.find_one({"userId": userId})
+    return dumps(userBio), 200

@@ -1,15 +1,18 @@
 import React, { useState, useContext } from 'react';
 import { Button, TextField, Grid, Paper, Typography } from '@mui/material';
 import AuthContext from '../components/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate();
+
   const {authTokens, setTokens} = useContext(AuthContext)
 
     const handleLogin = async () => {
-        const response = await fetch(`http://3.145.19.247:5000/polygusser/login?userName=${username}&password=${password}`, {
+        const response = await fetch(`http://localhost:5000/polygusser/login?userName=${username}&password=${password}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -29,11 +32,15 @@ export default function LoginPage() {
         }
     }
 
+    const handleRegister = () => {
+      navigate('/polyguesser/register');
+    }
+
     console.log(authTokens);
 
   return (
     <Grid container justify="center" style={{ minHeight: '100vh' }}>
-      <Paper style={{ padding: 20, width: '100%', height: '100vh' }}>
+      <Paper style={{ padding: 20, width: '100%', height: '100vh', textAlign: 'center' }}>
         <Grid container direction="column" spacing={2}>
           <Grid item>
             <Typography variant="h5">Login</Typography>
@@ -42,6 +49,7 @@ export default function LoginPage() {
             <TextField
               label="Username"
               variant="outlined"
+              style={{ width: '30%' }}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -50,6 +58,7 @@ export default function LoginPage() {
             <TextField
               label="Password"
               variant="outlined"
+              style={{ width: '30%' }}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -58,6 +67,9 @@ export default function LoginPage() {
           <Grid item>
             <Button variant="contained" color="primary" onClick={handleLogin}>
               Login
+            </Button>
+            <Button variant="contained" color="primary" onClick={handleRegister}>
+              Register
             </Button>
           </Grid>
         </Grid>

@@ -5,10 +5,16 @@ import { useNavigate } from 'react-router-dom';
 export default function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [school, setSchool] = useState(''); 
+    const [work, setWork] = useState(''); 
+    const [location, setLocation] = useState(''); 
+    const [from, setFrom] = useState(''); 
+    const [aboutMe, setAboutMe] = useState('');
     const navigate = useNavigate();
 
     const handleRegister = async () => {
-        const response = await fetch(`http://3.145.19.247:5000/polygusser/register?password=${password}&userName=${username}`, {
+        // You might want to update this part to include the new fields
+        const response = await fetch(`http://localhost:5000/polygusser/register?password=${password}&userName=${username}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -20,15 +26,15 @@ export default function Register() {
         })
     
         if (response.ok) {
-            navigate('/polygusser/login');
+            navigate('/polyguesser/login');
         } else {
             console.log(response);
         }
     };
 
     return (
-        <Grid container justify="center" style={{ minHeight: '100vh' }}>
-        <Paper style={{ padding: 20, width: '100%', height: '100vh' }}>
+        <Grid container justify="center" alignItems="flex-end" style={{ minHeight: '100vh' }}>
+        <Paper style={{ padding: 20, width: '100%', height: '100vh', textAlign: 'center'}}>
             <Grid container direction="column" spacing={2}>
             <Grid item>
                 <Typography variant="h5">Register</Typography>
@@ -37,6 +43,7 @@ export default function Register() {
                 <TextField
                 label="Username"
                 variant="outlined"
+                style={{ width: '30%' }}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 />
@@ -45,9 +52,55 @@ export default function Register() {
                 <TextField
                 label="Password"
                 variant="outlined"
+                style={{ width: '30%' }}
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                />
+            </Grid>
+            <Grid item>
+                <TextField
+                label="School"
+                variant="outlined"
+                style={{ width: '30%' }}
+                value={school}
+                onChange={(e) => setSchool(e.target.value)}
+                />
+            </Grid>
+            <Grid item>
+                <TextField
+                label="Work"
+                variant="outlined"
+                style={{ width: '30%' }}
+                value={work}
+                onChange={(e) => setWork(e.target.value)}
+                />
+            </Grid>
+            <Grid item>
+                <TextField
+                label="Location"
+                variant="outlined"
+                style={{ width: '30%' }}
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                />
+            </Grid>
+            <Grid item>
+                <TextField
+                label="From"
+                style={{ width: '30%' }}
+                variant="outlined"
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
+                />
+            </Grid>
+            <Grid item>
+                <TextField
+                label="about me"
+                style={{ width: '30%' }}
+                variant="outlined"
+                value={from}
+                onChange={(e) => setAboutMe(e.target.value)}
                 />
             </Grid>
             <Grid item>
