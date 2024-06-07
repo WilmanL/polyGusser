@@ -29,6 +29,8 @@ export default function LoginPage() {
         }
     }
 
+    console.log(authTokens);
+
   return (
     <Grid container justify="center" style={{ minHeight: '100vh' }}>
       <Paper style={{ padding: 20, width: '100%', height: '100vh' }}>
