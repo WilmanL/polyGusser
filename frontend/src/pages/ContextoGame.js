@@ -16,10 +16,14 @@ export default function ContextoGame() {
     //temp hardcoded vars for development - need to change these later
     const user_id = 'dhruv26';
 
+    useEffect(() => {
+        
+    });
+
     // component mounted
     useEffect(() => {
         setIsLoading(true);
-        fetch(`http://3.145.19.247:5000/polyguesser/contexto?user_id=${user_id}`)
+        fetch(`http://localhost:5000/polyguesser/contexto?user_id=${user_id}`)
             .then(response => response.json()) // parse the JSON from the body of the response
             .then(data => {
                 console.log(data);
@@ -33,7 +37,7 @@ export default function ContextoGame() {
     useEffect(() => {
         if (guess_word) {
             setIsLoading(true);
-            fetch(`http://3.145.19.247:5000/polyguesser/contexto?guess_word=${guess_word}&user_id=${user_id}`)
+            fetch(`http://localhost:5000/polyguesser/contexto?guess_word=${guess_word}&user_id=${user_id}`)
                 .then(response => response.json())
                 .then(data => {
                     setGameDoc(data);

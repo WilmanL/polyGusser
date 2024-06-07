@@ -17,7 +17,7 @@ function App() {
             <Route path="/polyguesser/contextoGame" element={<ContextoGame/>} />
             {/* <Route path="/polyguesser/login" element={<Auth/>} /> */}
             {/* <Route path="/polyguesser/Register" element={<Register/>} /> */}
-            <Route path="/*" element={<Wall/>} />
+            <Route path="/*"  element={<Wall/>} />
           </Routes>
         </Router>
       </div>
