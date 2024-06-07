@@ -1,6 +1,5 @@
 import { useState, useEffect} from "react";
 import dayLight from "../assests/dayLight.jpg";
-import nightLight from "../assests/nightLight.png";
 
 import * as React from 'react';
 import Card from '@mui/material/Card';
@@ -8,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 
 export default function WordleResult({user_id}) {
     const [wordOfTheDay, setWordOfTheDay] = useState('');
@@ -16,8 +16,48 @@ export default function WordleResult({user_id}) {
     const [lastGuess, setLastGuess] = useState('');
     const [guessed, setGuessed] = useState(false);
 
+    //dialog code
+    const [open, setOpen] = useState(false);
+    const [shareText, setShareText] = useState('');
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleShare = () => {
+        const data = {
+          user_id: user_id,
+          guess_number: numberOfGuesses,
+          date: date,
+          last_guess: lastGuess,
+          postContent: shareText,
+          wordOfTheDay: wordOfTheDay
+        };
+      
+        fetch('http://3.145.19.247:5000/polyguesser/wall', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      
+        setOpen(false);
+      };
+
     useEffect(() => {
-        fetch(`http://localhost:5000/polygusser/contexto_result?user_id=${user_id}`)
+        fetch(`http://3.145.19.247:5000/polyguesser/contexto_result?user_id=${user_id}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -42,14 +82,16 @@ export default function WordleResult({user_id}) {
             <CardMedia
             component="img"
             height="340"
-            image={dayLight}
+            onError={(e)=>{e.target.onerror = null; e.target.src=dayLight}}
+            image={`https://picsum.photos/800/1000?${new Date().getTime()}`}
             alt="day Light"
             />
             :
             <CardMedia
             component="img"
             height="340"
-            image={nightLight}
+            onError={(e)=>{e.target.onerror = null; e.target.src=dayLight}}
+            image={'https://picsum.photos/800/1000'}
             alt="night Light"
             />
         }
@@ -72,10 +114,36 @@ export default function WordleResult({user_id}) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={handleClickOpen}>
           Share
         </Button>
       </CardActions>
+
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+        <DialogTitle>Share your post</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Write about the post you want to share:
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Share Text"
+            type="text"
+            fullWidth
+            rows={4}
+            value={shareText}
+            onChange={(e) => setShareText(e.target.value)}
+            sx={{mt: 2}}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleShare}>Share</Button>
+        </DialogActions>
+      </Dialog>
+
     </Card>
   );
 }

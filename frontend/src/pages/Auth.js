@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, TextField, Grid, Paper, Typography } from '@mui/material';
 import AuthContext from '../components/AuthContext';
 
@@ -9,7 +9,7 @@ export default function LoginPage() {
   const {authTokens, setTokens} = useContext(AuthContext)
 
     const handleLogin = async () => {
-        const response = await fetch(`http://localhost:5000/polygusser/login?userName=${username}&password=${password}`, {
+        const response = await fetch(`http://3.145.19.247:5000/polygusser/login?userName=${username}&password=${password}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

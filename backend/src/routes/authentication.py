@@ -9,11 +9,11 @@ from datetime import timedelta
 import bcrypt
 
 # @brief: gets the functional access to contexto collection
-contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection = get_db()
+contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection, wallSchemaCollection = get_db()
 
 # @brief: route to auth endpoint
 auth = Blueprint('auth', __name__)
-@auth.route('/polygusser/register', methods=['POST'])
+@auth.route('/polyguesser/register', methods=['POST'])
 def register():
     user_name = request.args.get('userName', default = '', type = str)
     password = request.args.get('password', default = '', type = str)
@@ -30,7 +30,7 @@ def register():
 
     return jsonify({"msg": "User created successfully"}), 200
 
-@auth.route('/polygusser/login', methods=['POST'])
+@auth.route('/polyguesser/login', methods=['POST'])
 def login():
     user_name = request.args.get('userName', default = '', type = str)
     password = request.args.get('password', default = '', type = str)

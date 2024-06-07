@@ -6,7 +6,7 @@ function PrivateRoute({children, ...props}) {
 
   return (
     <Route {...props}>
-      {auth.isAuth() ? children : <Navigate to="/polygusser/login" />}
+      {auth.isAuth() ? children : <Navigate to="/polyguesser/login" />}
     </Route>
   )
 }

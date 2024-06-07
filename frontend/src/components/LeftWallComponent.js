@@ -1,5 +1,5 @@
 import React from 'react'
-import testImage from '../assests/test.jpg';
+import testImage from '../assests/dayLight.jpg';
 import { scrollbarStyles } from '../customStyles/scrollBarStyles';
 
 
@@ -9,9 +9,9 @@ export default function LeftWallComponent() {
         <div className="left-column scrollBar" style={{ overflowY: 'auto', overflowX: 'hidden', maxHeight: '100vh' }}>
             <div style={{ paddingRight: '10px', marginRight: '-10px' }}>
                 <div className="card card-left1 mb-4">
-                    <img src={'https://picsum.photos/800/1000'} alt="" className="card-img-top img-fluid" />
+                    <img src={'https://picsum.photos/800/1000'} onError={(e)=>{e.target.onerror = null; e.target.src=testImage}} alt="" className="card-img-top img-fluid" />
                     <div className="card-body text-center">
-                    <img src={'https://picsum.photos/800/1000'} alt="img" width="120px" height="120px" className="rounded-circle mt-n5" />
+                    <img src={'https://picsum.photos/800/1000'} onError={(e)=>{e.target.onerror = null; e.target.src=testImage}} alt="img" width="120px" height="120px" className="rounded-circle mt-n5" />
                     <h5 className="card-title">Saumitra Tiwari</h5>
                     <p className="card-text text-justify mb-2">I wish I was a little bit tallers.</p>
                     <ul className="list-unstyled nav justify-content-center">

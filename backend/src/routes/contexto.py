@@ -6,7 +6,7 @@ from dataBase import get_db
 from nltk.corpus import words
 
 # @brief: gets the functional access to contexto collection
-contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection = get_db()
+contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection, wallSchemaCollection = get_db()
 
 # @brief: Setup the word for the day in the database if not present
 def wordSetup():
@@ -44,7 +44,7 @@ def guess_update(wordList):
 
 # @brief: route to contexto endpoint
 contexto = Blueprint('contexto', __name__)
-@contexto.route('/polygusser/contexto')
+@contexto.route('/polyguesser/contexto')
 def get_contexto():
     guess_word = ''
     guessed = False
@@ -84,7 +84,7 @@ def get_contexto():
 
 
 # @brief: route to get result of the day
-@contexto.route('/polygusser/contexto_result')
+@contexto.route('/polyguesser/contexto_result')
 def get_contexto_result():
     user_id = ''
     user_id = request.args.get('user_id', default = '', type = str)
@@ -104,9 +104,21 @@ def get_contexto_result():
     return dumps({"result": result, "wordInfo": wordInfo})
 
 # @brief: route to get leaderboard
-@contexto.route('/polygusser/leaderboard')
+@contexto.route('/polyguesser/leaderboard')
 def get_leaderboard():
     currDate = datetime.now().date()
     result = leaderboardCollection.find({"date": str(currDate)}, sort=[("number_of_guesses", 1)])
     return dumps(result)
 
+# create the route for the wall component
+@contexto.route('/polyguesser/wall', methods=['POST'])
+def get_wall():
+    data = request.get_json()
+    wallSchemaCollection.insert_one(data)
+    return jsonify({"msg": "Post added successfully"}), 200
+
+# get wall posts
+@contexto.route('/polyguesser/get_wall')
+def get_wall_posts():
+    result = wallSchemaCollection.find()
+    return dumps(result)
