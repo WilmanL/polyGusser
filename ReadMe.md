@@ -13,6 +13,7 @@ This project is an interactive website called "PolyGuesser". It's a game platfor
 
 Figma UI Prototype:
 https://www.figma.com/design/G2SRlEUOWwc67N37Bm5WjW/CSC-307-TE2?node-id=0-1
+Last Updated: 5/10/2024
 
 Developement Enviroment setup:
 1. cd into the backend folder
