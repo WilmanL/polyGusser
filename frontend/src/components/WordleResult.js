@@ -32,7 +32,7 @@ export default function WordleResult({user_id}) {
 
     const handleShare = () => {
         const data = {
-          user_id: user_id,
+          user_id: authTokens.userName,
           guess_number: numberOfGuesses,
           date: date,
           last_guess: lastGuess,
