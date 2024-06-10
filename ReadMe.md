@@ -9,7 +9,7 @@
 ![image](https://github.com/satiwari26/polyGusser/assets/122580195/a797fd9a-7be6-4d3e-abd4-758fd3d050d5)
 
 Project Blurb
-This project is an interactive website called "PolyGuesser". It's a game platform that mimics the The New York Times "Wordle" game, with an added user profile management system. This website allows users to login/register, saving their profiles, game profiles, and statistics. On the front end, React components are used to create websites interface and user profiles. The backend is powered by Flask, which handles user authentication, game logic, and database interactions on MongoDB. The website includes dyanmic data fetching to ensure that each user has a unique experience. 
+This project is an interactive website called projects.polyguesser.xyz It's a game platform that mimics the The New York Times "Wordle" game, with an added user profile management system. This website allows users to login/register, saving their profiles, game profiles, and statistics. On the front end, React components are used to create websites interface and user profiles. The backend is powered by Flask, which handles user authentication, game logic, and database interactions on MongoDB. The website includes dyanmic data fetching to ensure that each user has a unique experience. 
 
 Figma UI Prototype:
 https://www.figma.com/design/G2SRlEUOWwc67N37Bm5WjW/CSC-307-TE2?node-id=0-1
