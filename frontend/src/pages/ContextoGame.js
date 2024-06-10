@@ -28,7 +28,7 @@ export default function ContextoGame() {
                 setIsLoading(false);
             })
             .catch(error => console.error('Error:', error));
-    }, [authTokens.userId]);
+    }, [authTokens]);
 
     useEffect(() => {
         if (guess_word) {

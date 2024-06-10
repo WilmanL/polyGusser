@@ -76,7 +76,7 @@ export default function WordleResult({user_id}) {
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
             });
-    }, [user_id]);
+    }, [authTokens.userId, authTokens.userName]);
   return (
     <Card sx={{ maxWidth: '100%' }}>
       <CardActionArea>
