@@ -8,6 +8,7 @@ from flask_jwt_extended import jwt_required
 from datetime import timedelta
 import bcrypt
 import json
+from bson import ObjectId
 
 # @brief: gets the functional access to contexto collection
 contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection, wallSchemaCollection, userBioSchemaCollection = get_db()
@@ -35,6 +36,7 @@ def register():
 
     # Insert user bio data
     userBioData['userId'] = userLoginData['_id']
+    userBioData['user_name'] = userLoginData["user_name"]
     userBioSchemaCollection.insert_one(userBioData)
 
     return jsonify({"msg": "User created successfully"}), 200
@@ -60,5 +62,5 @@ def login():
 @auth.route('/polyguesser/userBio')
 def getUserBio():
     userId = request.args.get('userId', default = '', type = str)
-    userBio = userBioSchemaCollection.find_one({"userId": userId})
+    userBio = userBioSchemaCollection.find_one({"userId": ObjectId(userId)})
     return dumps(userBio), 200
