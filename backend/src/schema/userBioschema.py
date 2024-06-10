@@ -6,10 +6,10 @@ db = client["poly_gusser"]
 schema = {
     "$jsonSchema": {
         "bsonType": "object",
-        "required": ["userId","user_name", "school", "work", "location", "from", "about", ],
+        "required": ["userId","user_name"],
         "properties": {
             "userId": {
-                "bsonType": "string",
+                "bsonType": "objectId",
                 "description": "must be a string and is required"
             },
             "user_name": {
