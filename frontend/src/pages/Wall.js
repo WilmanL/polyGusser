@@ -3,6 +3,7 @@ import LeftWallComponent from '../components/LeftWallComponent';
 import MiddleWallComponent from '../components/MiddleWallComponent';
 import RightWallComponent from '../components/RightWallComponent';
 import AuthContext from '../components/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 export default function Wall() {
   const { authTokens } = useContext(AuthContext)
