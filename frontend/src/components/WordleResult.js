@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect, useContext} from "react";
 import dayLight from "../assests/dayLight.jpg";
 
 import * as React from 'react';
@@ -8,8 +8,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import AuthContext from "./AuthContext";
 
 export default function WordleResult({user_id}) {
+    const { authTokens, setTokens } = useContext(AuthContext);
     const [wordOfTheDay, setWordOfTheDay] = useState('');
     const [numberOfGuesses, setNumberOfGuesses] = useState(0);
     const [date, setDate] = useState('');
@@ -57,7 +59,7 @@ export default function WordleResult({user_id}) {
       };
 
     useEffect(() => {
-        fetch(`http://3.145.19.247:5000/polyguesser/contexto_result?user_id=${user_id}`)
+        fetch(`http://3.145.19.247:5000/polyguesser/contexto_result?user_id=${authTokens.userId}&user_name=${authTokens.userName}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
