@@ -1,14 +1,12 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from gensim.models import KeyedVectors
 import random
-import json
 from bson.json_util import dumps
 from dataBase import get_db
 from nltk.corpus import words
 
 # @brief: gets the functional access to contexto collection
-contextoCollection, userGuessCollection, leaderboardCollection = get_db()
+contextoCollection, userGuessCollection, leaderboardCollection, userLoginCollection, wallSchemaCollection, userBioSchemaCollection = get_db()
 
 # @brief: Setup the word for the day in the database if not present
 def wordSetup():
@@ -46,7 +44,7 @@ def guess_update(wordList):
 
 # @brief: route to contexto endpoint
 contexto = Blueprint('contexto', __name__)
-@contexto.route('/polygusser/contexto')
+@contexto.route('/polyguesser/contexto')
 def get_contexto():
     guess_word = ''
     guessed = False
@@ -57,11 +55,21 @@ def get_contexto():
     wordSetup()
     currDate = datetime.now().date()
     result = contextoCollection.find_one({"date": str(currDate)})
+
+    # check if user has previously guessed the word or not in all the guesses
+    previous_guesses = userGuessCollection.find({"user_id": user_id, "date": str(currDate)})
+    for guess in previous_guesses:
+        if guess["guessed"]:
+            return jsonify({"similarity": similarity, "guessed": guess["guessed"], "guessNumber": guess["guess_number"]})
+        elif guess["guess_number"] == 6:
+            return jsonify({"similarity": similarity, "guessed": False, "guessNumber": guess["guess_number"]})
+
+
     if guess_word != '':
         similarity = findSimilarity(guess_word, result['game_word'])
 
         # find previous max number, if it exist and update the current guess number
-        max_guess_document = userGuessCollection.find_one({"user_id": user_id}, sort=[("guess_number", -1)])
+        max_guess_document = userGuessCollection.find_one({"user_id": user_id, "date": str(currDate)}, sort=[("guess_number", -1)])
         if max_guess_document is not None:
             max_guess_number = max_guess_document["guess_number"] + 1
         else:
@@ -78,27 +86,42 @@ def get_contexto():
 
 
 # @brief: route to get result of the day
-@contexto.route('/polygusser/contexto_result')
+@contexto.route('/polyguesser/contexto_result')
 def get_contexto_result():
     user_id = ''
     user_id = request.args.get('user_id', default = '', type = str)
+    user_name = request.args.get('user_name', default = '', type = str)
     currDate = datetime.now().date()
     result = userGuessCollection.find_one({"user_id": user_id, "date": str(currDate)}, sort=[("guess_number", -1)])
     wordInfo = contextoCollection.find_one({"date": str(currDate)})
 
     # temp set the userName
-    user_name = "Dhruv"
+    # user_name = "Dhruv"
     
     # check if the user is successfully guessed the word
     if result is not None and result["guessed"]:
-        leaderboardCollection.insert_one({"user_id": result["user_id"], "user_name": user_name, "date": str(currDate), "wordOfDay": wordInfo["game_word"], "number_of_guesses": result["guess_number"]})
+        existing_entry = leaderboardCollection.find_one({"user_id": result["user_id"], "date": str(currDate)})
+        if existing_entry is None:
+            leaderboardCollection.insert_one({"user_id": result["user_id"], "user_name": user_name, "date": str(currDate), "wordOfDay": wordInfo["game_word"], "number_of_guesses": result["guess_number"]})    
     
     return dumps({"result": result, "wordInfo": wordInfo})
 
 # @brief: route to get leaderboard
-@contexto.route('/polygusser/leaderboard')
+@contexto.route('/polyguesser/leaderboard')
 def get_leaderboard():
     currDate = datetime.now().date()
     result = leaderboardCollection.find({"date": str(currDate)}, sort=[("number_of_guesses", 1)])
     return dumps(result)
 
+# create the route for the wall component
+@contexto.route('/polyguesser/wall', methods=['POST'])
+def get_wall():
+    data = request.get_json()
+    wallSchemaCollection.insert_one(data)
+    return jsonify({"msg": "Post added successfully"}), 200
+
+# get wall posts
+@contexto.route('/polyguesser/get_wall')
+def get_wall_posts():
+    result = wallSchemaCollection.find()
+    return dumps(result)

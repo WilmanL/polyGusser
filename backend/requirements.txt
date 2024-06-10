@@ -4,3 +4,6 @@ flask
 pymongo
 flask_cors
 nltk
+# for authentication
+flask_jwt_extended
+bcrypt

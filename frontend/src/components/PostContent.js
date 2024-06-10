@@ -1,32 +1,32 @@
 import React from 'react'
+import dayLight from "../assests/dayLight.jpg";
 import MainCardCommentsComponent from './MainCardCommentsComponent';
-import testImage from '../assests/test.jpg';
 
-export default function PostContent() {
+export default function PostContent({user_name, guess_number, date, last_guess, postContent, wordOfTheDay}) {
   return (
     <div className="card-body">
         <div className="media">
-            <img src={testImage} alt="img" width="55px" height="55px" className="rounded-circle mr-3" />
+            <img src={'https://picsum.photos/800/1000'} onError={(e)=>{e.target.onerror = null; e.target.src=dayLight}} alt="img" width="55px" height="55px" className="rounded-circle mr-3" />
             <div className="media-body">
-                <h5>Saumitra Tiwari</h5>
-                <p className="card-text text-justify">Aenean lacinia bibendum nulla sed consectetur. Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                <h5>{user_name}</h5>
+                <p className="card-text text-justify">{postContent}</p>
                 
                 <div className="row no-gutters mb-3">
                     <div className="col-6 p-1 text-center">
-                    <img src={testImage} alt="" className="img-fluid mb-2" />
-                    <img src={testImage} alt="" className="img-fluid" />
+                      <img src={`https://picsum.photos/800/1000?random=${Math.random()}`} onError={(e)=>{e.target.onerror = null; e.target.src=dayLight}} alt="" className="img-fluid mb-2" />
+                      <img src={`https://picsum.photos/800/1000?random=${Math.random()}`} onError={(e)=>{e.target.onerror = null; e.target.src=dayLight}} alt="" className="img-fluid" />
                     </div>
                     <div className="col-6 p-1 text-center">
-                    <img src={testImage} alt="" className="img-fluid mb-2" />
-                    <img src={testImage} alt="" className="img-fluid" />
+                      <img src={`https://picsum.photos/800/1000?random=${Math.random()}`} onError={(e)=>{e.target.onerror = null; e.target.src=dayLight}} alt="" className="img-fluid mb-2" />
+                      <img src={`https://picsum.photos/800/1000?random=${Math.random()}`} onError={(e)=>{e.target.onerror = null; e.target.src=dayLight}} alt="" className="img-fluid" />
                     </div>
                 </div>
                 
-                <MainCardCommentsComponent/>
+                <MainCardCommentsComponent guess_number = {guess_number} last_guess = {last_guess} wordOfTheDay = {wordOfTheDay} user_name = {user_name}/>
                 
             </div>
             {/* posted time shown */}
-            <small>5min</small>
+            <small>{date}</small>
         </div>
     </div>
   )

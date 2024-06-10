@@ -3,39 +3,42 @@ import pymongo
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["poly_gusser"]
 
-# game schema for storing each day game data
 schema = {
     "$jsonSchema": {
         "bsonType": "object",
-        "required": ["user_id","user_name", "date", "wordOfDay", "number_of_guesses"],
+        "required": ["userId","user_name"],
         "properties": {
-            "user_id": {
+            "userId": {
+                "bsonType": "objectId",
+                "description": "must be a string and is required"
+            },
+            "user_name": {
                 "bsonType": "string",
                 "description": "must be a string and is required"
             },
-            "user_name":{
+            "school": {
                 "bsonType": "string",
                 "description": "must be a string and is required"
             },
-            "guess_number": {
-                "bsonType": "int",
-                "description": "must be an integer and is required"
-            },
-            "date": {
+            "work": {
                 "bsonType": "string",
                 "description": "must be a string and is required"
             },
-            "wordOfDay": {
+            "location": {
                 "bsonType": "string",
                 "description": "must be a string and is required"
             },
-            "number_of_guesses": {
-                "bsonType": "int",
-                "description": "must be an integer and is required"
+            "from": {
+                "bsonType": "string",
+                "description": "must be a string and is required"
+            },
+            "about": {
+                "bsonType": "string",
+                "description": "must be a string and is required"
             },
         }
     }
 }
 
 # Create a new collection with schema validation
-db.create_collection("leaderBoard", validator=schema)
+db.create_collection("userBioSchema", validator=schema)

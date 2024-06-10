@@ -7,13 +7,9 @@ db = client["poly_gusser"]
 schema = {
     "$jsonSchema": {
         "bsonType": "object",
-        "required": ["user_id","user_name", "date", "wordOfDay", "number_of_guesses"],
+        "required": ["user_id","guess_number", "date", "last_guess", "postContent", "wordOfTheDay"],
         "properties": {
             "user_id": {
-                "bsonType": "string",
-                "description": "must be a string and is required"
-            },
-            "user_name":{
                 "bsonType": "string",
                 "description": "must be a string and is required"
             },
@@ -25,17 +21,21 @@ schema = {
                 "bsonType": "string",
                 "description": "must be a string and is required"
             },
-            "wordOfDay": {
+            "last_guess": {
                 "bsonType": "string",
                 "description": "must be a string and is required"
             },
-            "number_of_guesses": {
-                "bsonType": "int",
-                "description": "must be an integer and is required"
+            "postContent": {
+                "bsonType": "string",
+                "description": "must be a string and is required"
+            },
+            "wordOfTheDay": {
+                "bsonType": "string",
+                "description": "must be a string and is required"
             },
         }
     }
 }
 
 # Create a new collection with schema validation
-db.create_collection("leaderBoard", validator=schema)
+db.create_collection("wallSchema", validator=schema)
