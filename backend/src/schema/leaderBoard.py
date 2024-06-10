@@ -13,6 +13,10 @@ schema = {
                 "bsonType": "string",
                 "description": "must be a string and is required"
             },
+            "user_name":{
+                "bsonType": "string",
+                "description": "must be a string and is required"
+            },
             "guess_number": {
                 "bsonType": "int",
                 "description": "must be an integer and is required"
