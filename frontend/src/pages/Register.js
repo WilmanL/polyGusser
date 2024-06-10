@@ -48,7 +48,7 @@ export default function Register() {
             </Grid>
             <Grid item>
                 <TextField
-                label="Username"
+                label="Username (Required)"
                 variant="outlined"
                 style={{ width: '30%' }}
                 value={username}
@@ -57,7 +57,7 @@ export default function Register() {
             </Grid>
             <Grid item>
                 <TextField
-                label="Password"
+                label="Password (Required)"
                 variant="outlined"
                 style={{ width: '30%' }}
                 type="password"
@@ -67,7 +67,7 @@ export default function Register() {
             </Grid>
             <Grid item>
                 <TextField
-                label="School"
+                label="School (Optional)"
                 variant="outlined"
                 style={{ width: '30%' }}
                 value={school}
@@ -76,7 +76,7 @@ export default function Register() {
             </Grid>
             <Grid item>
                 <TextField
-                label="Work"
+                label="Work (Optional)"
                 variant="outlined"
                 style={{ width: '30%' }}
                 value={work}
@@ -85,7 +85,7 @@ export default function Register() {
             </Grid>
             <Grid item>
                 <TextField
-                label="Location"
+                label="Location (Optional)"
                 variant="outlined"
                 style={{ width: '30%' }}
                 value={location}
@@ -94,7 +94,7 @@ export default function Register() {
             </Grid>
             <Grid item>
                 <TextField
-                label="From"
+                label="From (Optional)"
                 style={{ width: '30%' }}
                 variant="outlined"
                 value={from}
@@ -103,7 +103,7 @@ export default function Register() {
             </Grid>
             <Grid item>
                 <TextField
-                label="about me"
+                label="about me (Optional)"
                 style={{ width: '30%' }}
                 variant="outlined"
                 value={aboutMe}
