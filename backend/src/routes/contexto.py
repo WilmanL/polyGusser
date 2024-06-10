@@ -90,12 +90,13 @@ def get_contexto():
 def get_contexto_result():
     user_id = ''
     user_id = request.args.get('user_id', default = '', type = str)
+    user_name = request.args.get('user_name', default = '', type = str)
     currDate = datetime.now().date()
     result = userGuessCollection.find_one({"user_id": user_id, "date": str(currDate)}, sort=[("guess_number", -1)])
     wordInfo = contextoCollection.find_one({"date": str(currDate)})
 
     # temp set the userName
-    user_name = "Wilman Li"
+    # user_name = "Dhruv"
     
     # check if the user is successfully guessed the word
     if result is not None and result["guessed"]:
