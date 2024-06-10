@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import LeftWallComponent from '../components/LeftWallComponent';
 import MiddleWallComponent from '../components/MiddleWallComponent';
 import RightWallComponent from '../components/RightWallComponent';
+import AuthContext from '../components/AuthContext';
 
 export default function Wall() {
+  const { authTokens } = useContext(AuthContext)
+  if (authTokens.userId === null) {
+    return <Navigate to="/polyguesser/login" />;
+}
   return (
     <div className="container">
       <div className="row">
