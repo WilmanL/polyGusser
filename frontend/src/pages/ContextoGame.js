@@ -14,7 +14,7 @@ export default function ContextoGame() {
     const [isLoading, setIsLoading] = useState(false);
 
     // Get auth context
-    const { authTokens, setTokens } = useContext(AuthContext);
+    const { authTokens} = useContext(AuthContext);
 
 
     useEffect(() => {

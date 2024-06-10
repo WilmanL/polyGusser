@@ -11,7 +11,7 @@ import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, T
 import AuthContext from "./AuthContext";
 
 export default function WordleResult({user_id}) {
-    const { authTokens, setTokens } = useContext(AuthContext);
+    const { authTokens} = useContext(AuthContext);
     const [wordOfTheDay, setWordOfTheDay] = useState('');
     const [numberOfGuesses, setNumberOfGuesses] = useState(0);
     const [date, setDate] = useState('');

@@ -6,7 +6,7 @@ import AuthContext from './AuthContext';
 
 
 export default function LeftWallComponent() {
-    const {authTokens, setTokens} = useContext(AuthContext)
+    const {authTokens} = useContext(AuthContext)
     const [bio, setBio] = useState(null); // To hold fetched user bio
     useEffect(() => {
         if (authTokens.userId) { // Check if userId is not null or undefined
