@@ -21,7 +21,7 @@ export default function MiddleWallComponent() {
             {posts.map((post, index) => (
               <PostContent 
                 key={index} 
-                user_name={'Wilman Li'}
+                user_name={post.user_id}
                 guess_number={post.guess_number} 
                 date={post.date} 
                 last_guess={post.last_guess} 
